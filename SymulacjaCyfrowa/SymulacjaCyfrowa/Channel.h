@@ -5,6 +5,8 @@ class Channel
 public:
 	Channel();						//Channel class constructor
 	~Channel() = default;			//Channel class destroyer
+	bool GetInformationOnChannelUsage();
+	void AddPackageToChannel(Package* package);
 private:
 	Package* current_package_;		//Pointer to the currently transmitted packet
 	int retrasmission_id_;			//Variable that specifies the number of retransmissions that the packet performs

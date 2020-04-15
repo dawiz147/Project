@@ -42,10 +42,10 @@
     <ClCompile Include="TimeEvent.cpp">
       <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CheckingChannel.cpp">
+    <ClCompile Include="PackageGeneration.cpp">
       <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="PackageGeneration.cpp">
+    <ClCompile Include="CheckingChannel.cpp">
       <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,10 +68,10 @@
     <ClInclude Include="TimeEvent.h">
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
-    <ClInclude Include="CheckingChannel.h">
+    <ClInclude Include="PackageGeneration.h">
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
-    <ClInclude Include="PackageGeneration.h">
+    <ClInclude Include="CheckingChannel.h">
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
   </ItemGroup>

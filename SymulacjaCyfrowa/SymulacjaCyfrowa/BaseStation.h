@@ -10,6 +10,7 @@ public:
 	BaseStation();					//BaseStation class constructor
 	~BaseStation() = default;		//BaseStation class destroyer
 	void AddPackage(Package* package);
+	Package* SendPackage();
 private:
 	queue <Package*> package_;		//A queue that will store packets to be sent through the channel
 	int id_base_station_;			//Variable specifying the number of the sending station
