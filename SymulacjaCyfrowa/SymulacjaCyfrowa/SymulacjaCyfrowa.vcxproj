@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="BaseStation.cpp" />
     <ClCompile Include="Channel.cpp" />
+    <ClCompile Include="CheckingChannel.cpp" />
     <ClCompile Include="Package.cpp" />
     <ClCompile Include="PackageGeneration.cpp" />
     <ClCompile Include="ReceivingStation.cpp" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="BaseStation.h" />
     <ClInclude Include="Channel.h" />
+    <ClInclude Include="CheckingChannel.h" />
     <ClInclude Include="Package.h" />
     <ClInclude Include="PackageGeneration.h" />
     <ClInclude Include="ReceivingStation.h" />

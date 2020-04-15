@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="TimeEvents.h">
+      <UniqueIdentifier>{09da0d06-aba4-492b-a986-b2dff23da6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TimeEvent.cpp">
+      <UniqueIdentifier>{ed3fc2e3-0ebe-471e-9cc8-b15966778955}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SymulacjaCyfrowa.cpp">
@@ -34,10 +40,13 @@
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="TimeEvent.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>TimeEvent.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckingChannel.cpp">
+      <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
     <ClCompile Include="PackageGeneration.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,10 +66,13 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="TimeEvent.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>TimeEvents.h</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckingChannel.h">
+      <Filter>TimeEvents.h</Filter>
     </ClInclude>
     <ClInclude Include="PackageGeneration.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>TimeEvents.h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@ PackageGeneration::PackageGeneration(int time, BaseStation* base)
 void PackageGeneration::Execute() 
 {
 	Package* package = new Package();
+	base_->AddPackage(package);
 }
 void PackageGeneration::Print()
 {
