@@ -10,3 +10,10 @@ void BaseStation::AddPackage(Package* package)
 {
 	package_.push(package);
 }
+
+Package* BaseStation::SendPackage()
+{
+	Package* package=package_.front();
+	package_.pop();
+	return package;
+}

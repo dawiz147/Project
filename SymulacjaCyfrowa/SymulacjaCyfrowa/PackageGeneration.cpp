@@ -1,7 +1,5 @@
 #include "PackageGeneration.h"
-#include <iostream>
-#include "Package.h"
-#include "BaseStation.h"
+
 
 using namespace std;
 
@@ -15,6 +13,7 @@ void PackageGeneration::Execute()
 {
 	Package* package = new Package();
 	base_->AddPackage(package);
+	// ZAPLANUJ DODANIE KOLEJNEGO WYGERNORAWNIA PAKIETU ZGODZIE Z CGPk
 }
 void PackageGeneration::Print()
 {

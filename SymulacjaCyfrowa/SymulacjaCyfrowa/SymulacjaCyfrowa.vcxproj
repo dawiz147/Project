@@ -154,10 +154,12 @@
     <ClCompile Include="BaseStation.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="CheckingChannel.cpp" />
+    <ClCompile Include="CheckingChannelStatus.cpp" />
     <ClCompile Include="Package.cpp" />
     <ClCompile Include="PackageGeneration.cpp" />
     <ClCompile Include="ReceivingStation.cpp" />
     <ClCompile Include="SymulacjaCyfrowa.cpp" />
+    <ClCompile Include="TerError.cpp" />
     <ClCompile Include="TimeEvent.cpp" />
     <ClCompile Include="WirelessNetwork.cpp" />
   </ItemGroup>
@@ -165,9 +167,11 @@
     <ClInclude Include="BaseStation.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="CheckingChannel.h" />
+    <ClInclude Include="CheckingChannelStatus.h" />
     <ClInclude Include="Package.h" />
     <ClInclude Include="PackageGeneration.h" />
     <ClInclude Include="ReceivingStation.h" />
+    <ClInclude Include="TerError.h" />
     <ClInclude Include="TimeEvent.h" />
     <ClInclude Include="WirelessNetwork.h" />
   </ItemGroup>

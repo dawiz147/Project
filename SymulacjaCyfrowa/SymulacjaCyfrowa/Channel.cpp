@@ -7,3 +7,12 @@ Channel::Channel()
 	transmission_time_ = 0 ;
 	
 }
+bool Channel::GetInformationOnChannelUsage()
+{
+	return free_;
+}
+
+void Channel::AddPackageToChannel(Package* package)
+{
+	current_package_ = package;
+}
