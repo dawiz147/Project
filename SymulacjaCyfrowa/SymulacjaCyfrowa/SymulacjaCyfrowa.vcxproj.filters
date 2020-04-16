@@ -48,6 +48,12 @@
     <ClCompile Include="CheckingChannel.cpp">
       <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="CheckingChannelStatus.cpp">
+      <Filter>TimeEvent.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TerError.cpp">
+      <Filter>TimeEvent.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WirelessNetwork.h">
@@ -72,6 +78,12 @@
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
     <ClInclude Include="CheckingChannel.h">
+      <Filter>TimeEvents.h</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckingChannelStatus.h">
+      <Filter>TimeEvents.h</Filter>
+    </ClInclude>
+    <ClInclude Include="TerError.h">
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
   </ItemGroup>

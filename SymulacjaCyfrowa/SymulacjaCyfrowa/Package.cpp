@@ -8,3 +8,13 @@ Package::Package()
 	CTPk_ = 0;
 	source_transmiter_ = 0;
 }
+
+int Package::GetLR()
+{
+	return nr_retransmission_;
+}
+
+void Package::IncrementLR()
+{
+	nr_retransmission_++;
+}

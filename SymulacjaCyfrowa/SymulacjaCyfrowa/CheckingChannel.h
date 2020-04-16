@@ -16,6 +16,6 @@ private:
 	bool first_;
 	Channel* channel_;
 	BaseStation* base_;
-	Package* package_
+	Package* package_;
 };
 
