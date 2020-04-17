@@ -10,5 +10,6 @@ private:
   double time_;
   Channel* channel;
   int id_base_station_;
+  WirelessNetwork* network_;
 };
 

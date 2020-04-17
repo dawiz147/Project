@@ -5,9 +5,10 @@ CheckingChannelStatus::CheckingChannelStatus(int time, WirelessNetwork* network)
   channel_ = network->GetChannel();
 }
 
-bool CheckingChannelStatus::Execute()
+void CheckingChannelStatus::Execute()
 {
-  return channel_->GetInformationOnChannelUsage();
+  bool temp= channel_->GetInformationOnChannelUsage();
+  // POPRAWIÆ 
 }
 
 void CheckingChannelStatus::Print()

@@ -2,6 +2,7 @@
 #include "Package.h"
 class ReceivingStation
 {
+public:
   ReceivingStation();
   void AddPacket(Package* packet);
 private:
