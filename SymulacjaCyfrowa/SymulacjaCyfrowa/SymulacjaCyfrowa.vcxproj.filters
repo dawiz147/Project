@@ -54,6 +54,9 @@
     <ClCompile Include="TerError.cpp">
       <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="EndOfPacketTransmission.cpp">
+      <Filter>TimeEvent.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WirelessNetwork.h">
@@ -84,6 +87,9 @@
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
     <ClInclude Include="TerError.h">
+      <Filter>TimeEvents.h</Filter>
+    </ClInclude>
+    <ClInclude Include="EndOfPacketTransmission.h">
       <Filter>TimeEvents.h</Filter>
     </ClInclude>
   </ItemGroup>
