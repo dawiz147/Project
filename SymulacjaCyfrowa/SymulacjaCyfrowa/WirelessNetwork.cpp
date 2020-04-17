@@ -69,3 +69,8 @@ int WirelessNetwork::GetNumberOfMaxRetrasmission()
 {
   return max_retrasmission_;
 }
+
+void WirelessNetwork::AddPacketToReceivingStation(Package* package, int id_station)
+{
+  receiving_station_[i]
+}

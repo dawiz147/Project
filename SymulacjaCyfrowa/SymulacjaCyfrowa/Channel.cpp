@@ -16,3 +16,15 @@ void Channel::AddPackageToChannel(Package* package)
 {
 	current_package_ = package;
 }
+
+void Channel::SetChannelFree(bool free)
+{
+	free_ = free;
+}
+
+Package* Channel::GetPackage()
+{
+	Package* package_to_send = current_package_;
+	current_package_ = nullptr;
+	return package_to_send;
+}

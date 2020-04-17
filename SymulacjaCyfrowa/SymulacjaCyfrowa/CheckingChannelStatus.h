@@ -5,7 +5,7 @@
 class CheckingChannelStatus :public TimeEvent
 {
 	CheckingChannelStatus(int time, WirelessNetwork* network);
-	bool Execute();
+	void Execute();
 	void Print();
 private:
 	Channel* channel_;

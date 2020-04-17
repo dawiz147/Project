@@ -162,6 +162,7 @@
     <ClCompile Include="SymulacjaCyfrowa.cpp" />
     <ClCompile Include="TerError.cpp" />
     <ClCompile Include="TimeEvent.cpp" />
+    <ClCompile Include="TimeEventList.cpp" />
     <ClCompile Include="WirelessNetwork.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="ReceivingStation.h" />
     <ClInclude Include="TerError.h" />
     <ClInclude Include="TimeEvent.h" />
+    <ClInclude Include="TimeEventList.h" />
     <ClInclude Include="WirelessNetwork.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

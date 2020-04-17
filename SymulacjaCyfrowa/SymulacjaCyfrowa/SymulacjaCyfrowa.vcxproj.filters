@@ -57,6 +57,9 @@
     <ClCompile Include="EndOfPacketTransmission.cpp">
       <Filter>TimeEvent.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="TimeEventList.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WirelessNetwork.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="EndOfPacketTransmission.h">
       <Filter>TimeEvents.h</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeEventList.h">
+      <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
