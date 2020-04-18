@@ -16,6 +16,7 @@ WirelessNetwork::WirelessNetwork(int type_information, int type_print, int step_
     ReceivingStation* rbase = new ReceivingStation();
     receiving_station_.push_back(rbase);
   }
+ 
   this->PrintInfoAboutSystem();
 }
 

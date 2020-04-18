@@ -1,8 +1,8 @@
 #include "TerError.h"
-TerError::TerError(double time,  WirelessNetwork* network)
+TerError::TerError(double time,  WirelessNetwork* network, ConditionalEvent* conditional)
 {
   time_ = time;
-  //conditional_ = conditional;
+  conditional_ = conditional;
   network_ = network;
 }
 
@@ -15,11 +15,11 @@ void TerError::Execute()
     package_->IncrementLR();
     network_->AddToRetransmission(package_,package_->GetIdStation());
     package_ = nullptr;
-    // Wsysy³amy do retransmisji (dodaæ 2 kolejke)
+    // Wyslij do retransmisji zaplanuj zdarzenie czasowe utworzenia sprawdzenia zajetosci kana³u
   }
   else
   {
-    
+    conditional_->SetPackageToDelete(package_);
   }
 }
 

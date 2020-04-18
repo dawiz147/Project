@@ -32,6 +32,6 @@ private:
 	int type_information_;
 	int type_print_;
 	bool step_mode_;
-	//ConditionalEvent* conditional_;
+
 };
 

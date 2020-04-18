@@ -1,11 +1,11 @@
 #include "EndOfPacketTransmission.h"
-EndOfPacketTransmission::EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base)
+EndOfPacketTransmission::EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base, ConditionalEvent* conditional)
 {
   time_ = time;
   channel = wireless->GetChannel();
   id_base_station_ = id_base;
   network_ = wireless;
-  //conditional_ = conditional;
+  conditional_ = conditional;
 
 }
 void EndOfPacketTransmission::Execute()
@@ -13,7 +13,7 @@ void EndOfPacketTransmission::Execute()
   channel->SetChannelFree(true);
   Package* received = channel->GetPackage();
   network_->AddPacketToReceivingStation(received,id_base_station_);
-  //conditional_->ACKMessage();
+  conditional_->ACKMessage();
 }
 
 void EndOfPacketTransmission::Print()

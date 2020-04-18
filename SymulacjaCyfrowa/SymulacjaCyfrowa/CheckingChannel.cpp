@@ -1,9 +1,6 @@
 #include "CheckingChannel.h"
 void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 rz, false sprawdzenie po czasie DIFS
 {
-  /*
-  1.Sprawdz czy kana³ by³ wolny d³u¿ej ni¿ 2ms 
-  2.Je¿eli Tak, przeœlij pakiet je¿eli ,Nie ,zaplanuj ponownie sprawdzenie czy kana³ by³ wolny d³u¿ej ni¿ 2ms */
   if (first_ == true) 
   {
 
