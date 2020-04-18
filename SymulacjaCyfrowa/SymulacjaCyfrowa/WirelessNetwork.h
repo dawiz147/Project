@@ -19,6 +19,7 @@ public:
 	int GetNumberOfMaxRetrasmission();
 	void AddPacketToReceivingStation(Package* package,int id_station);
 	void AddPacketToBaseStation(Package* package, int id_station);
+	void SendPacket(int id_base_station);
 private:
 	vector<BaseStation*> base_stations_;				//A vector that stores pointers to each broadcasting station
 	double time_;										//A variable that specifies the overall system time

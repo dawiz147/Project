@@ -75,7 +75,13 @@ void WirelessNetwork::AddPacketToReceivingStation(Package* package, int id_stati
   receiving_station_[id_station]->AddPacket(package);
 }
 
-void WirelessNetwork::AddPacketToReceivingStation(Package* package, int id_station)
+void WirelessNetwork::AddPacketToBaseStation(Package* package, int id_station)
 {
   base_stations_[id_station]->AddPackage(package);
+}
+
+void WirelessNetwork::SendPacket(int id_base_station)
+{
+  channel_->AddPackageToChannel(base_stations_[id_base_station]->SendPackage());
+  
 }

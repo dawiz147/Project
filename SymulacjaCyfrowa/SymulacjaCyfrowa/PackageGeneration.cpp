@@ -20,6 +20,7 @@ void PackageGeneration::Execute()
 	Package* package = new Package();
 	network_->AddPacketToBaseStation(package,id_base_station_);
 	// ZAPLANUJ DODANIE KOLEJNEGO WYGERNORAWNIA PAKIETU ZGODZIE Z CGPk
+	// zaplanowanie zdarzenia czasowego sprawdzanie zajêtoœci kana³u 
 }
 void PackageGeneration::Print()
 {

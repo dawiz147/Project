@@ -3,11 +3,12 @@
 #include "Channel.h"
 using namespace std;
 #include <iostream>
-#include "BaseStation.h"
+#include "WirelessNetwork.h"
+#include "ConditionalEvent.h"
 class CheckingChannel :public TimeEvent
 {
 public:
-	CheckingChannel(double time,bool first, Channel* channel,BaseStation* base);
+	CheckingChannel(double time, bool first, WirelessNetwork* network, int id_base_station, ConditionalEvent* conditional);
 	void Execute();
 	void Print();
 	double GetTime();
@@ -17,7 +18,8 @@ private:
 	double time_;
 	bool first_;
 	Channel* channel_;
-	BaseStation* base_;
-	Package* package_;
+	WirelessNetwork* network_;
+	ConditionalEvent* conditional_;
+	int id_base_station_;
 };
 

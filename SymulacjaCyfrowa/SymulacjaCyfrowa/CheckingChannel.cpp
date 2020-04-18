@@ -13,9 +13,7 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 rz, false
   {
     if (channel_->GetInformationOnChannelUsage() == true)
     {
-      package_ = base_->SendPackage();
-      channel_->AddPackageToChannel(package_);
-      package_ = nullptr;
+      conditional_->AddPacketToSend(id_base_station_);
     }
     else
     {
@@ -35,11 +33,12 @@ double CheckingChannel::GetTime()
 {
   return time_;
 }
-CheckingChannel::CheckingChannel(double time, bool first,Channel* channel, BaseStation* base)
+CheckingChannel::CheckingChannel(double time, bool first, WirelessNetwork* network, int id_base_station,ConditionalEvent* conditional)
 {
   time_ = time;
   first_ = first;
-  channel_ = channel;
-  base_ = base;
-  package_ = nullptr;
+  network_ = network;
+  channel_ = network_->GetChannel();
+  conditional_ = conditional;
+  id_base_station_=id_base_station;
 }
