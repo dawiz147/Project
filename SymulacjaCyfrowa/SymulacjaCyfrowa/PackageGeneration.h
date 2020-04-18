@@ -4,12 +4,13 @@
 #include "Package.h"
 #include "WirelessNetwork.h"
 #include "TimeEventList.h"
-//#include "ConditionalEvent.h"
+#include "ConditionalEvent.h"
+
 
 class PackageGeneration:TimeEvent
 {
 public:
-	PackageGeneration(int time, WirelessNetwork* network, int id_base_station, TimeEventList list);
+	PackageGeneration(int time, WirelessNetwork* network, int id_base_station, TimeEventList list, ConditionalEvent* conditional);
 	~PackageGeneration() = default;
 	double GetTime();
 	void Execute();
@@ -20,5 +21,5 @@ private:
 	WirelessNetwork* network_;
 	int id_base_station_;
 	TimeEventList* list_;
-	//ConditionalEvent* conditional_;
+	ConditionalEvent* conditional_;
 };
