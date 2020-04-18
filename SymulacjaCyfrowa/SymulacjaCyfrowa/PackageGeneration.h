@@ -2,12 +2,13 @@
 #include "TimeEvent.h"
 #include <iostream>
 #include "Package.h"
-#include "BaseStation.h"
+#include "WirelessNetwork.h"
+#include "TimeEventList.h"
 
 class PackageGeneration:TimeEvent
 {
 public:
-	PackageGeneration(int time, BaseStation* base);
+	PackageGeneration(int time, WirelessNetwork* network, int id_base_station);
 	~PackageGeneration() = default;
 	double GetTime();
 	void Execute();
@@ -15,5 +16,6 @@ public:
 
 private:
 	double time_;
-	BaseStation* base_;
+	WirelessNetwork* network_;
+	int id_base_station_;
 };

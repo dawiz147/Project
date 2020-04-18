@@ -3,10 +3,11 @@
 
 using namespace std;
 
-PackageGeneration::PackageGeneration(int time, BaseStation* base)
+PackageGeneration::PackageGeneration(int time, WirelessNetwork* network,int id_base_station)
 {
 	time_ = time;
-	base_ = base;
+	network_ = network;
+	id_base_station_ = id_base_station;
 }
 
 double PackageGeneration::GetTime()
@@ -17,7 +18,7 @@ double PackageGeneration::GetTime()
 void PackageGeneration::Execute()
 {
 	Package* package = new Package();
-	base_->AddPackage(package);
+	network_->AddPacketToBaseStation(package,id_base_station_);
 	// ZAPLANUJ DODANIE KOLEJNEGO WYGERNORAWNIA PAKIETU ZGODZIE Z CGPk
 }
 void PackageGeneration::Print()
