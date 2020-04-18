@@ -14,7 +14,8 @@ void CheckingChannelStatus::Execute()
 void CheckingChannelStatus::Print()
 {
   cerr << "the channel is: " ;
-  if (channel_->GetPackage == 1) {
+  if ((channel_->GetInformationOnChannelUsage() == 1))
+  {
     cerr << "free" << endl;
   }
   else cerr << "busy" << endl;
