@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RECEIVINGSTATION_H
+#define RECEIVINGSTATION_H
 #include "Package.h"
 //#include "ConditionalEvent.h"
 
@@ -11,4 +12,4 @@ private:
   Package* packet_received_;
  // ConditionalEvent* conditional_;
 };
-
+#endif

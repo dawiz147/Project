@@ -13,6 +13,7 @@ void BaseStation::AddPackage(Package* package)
 
 Package* BaseStation::SendPackage()
 {
+	cerr << "The package is sent" << endl;
 	Package* package=package_.front();
 	package_.pop();
 	return package;

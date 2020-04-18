@@ -2,6 +2,10 @@
 
 using namespace std;
 #include "WirelessNetwork.h"
+#include "TimeEventList.h"
+#include "TimeEvent.h"
+#include "PackageGeneration.h"
+#include "ConditionalEvent.h"
 int main()
 {
   int type_information;
@@ -34,4 +38,7 @@ int main()
     cerr << "Wrong value selected!! Choose a number(1-2): "; cin >> step_mode;
   }
   WirelessNetwork* wireless_network = new WirelessNetwork(type_information, type_print, step_mode);
+  TimeEventList* time_event = new TimeEventList();
+  ConditionalEvent* conditional_event = new ConditionalEvent(wireless_network, time_event);
+    TimeEvent* generate = new PackageGeneration(0,wireless_network,1,time_event,conditional_event);
 }

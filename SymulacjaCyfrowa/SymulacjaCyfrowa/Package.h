@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PACKAGE_H
+#define PACKAGE_H
 class Package
 {
 public:
@@ -16,4 +17,4 @@ private:
 	int source_transmiter_;				//Variable describing which of the broadcasting stations the packet was sent from
 	int id_station_;
 };
-
+#endif

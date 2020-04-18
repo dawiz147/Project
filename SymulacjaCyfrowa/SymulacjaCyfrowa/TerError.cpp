@@ -25,7 +25,7 @@ void TerError::Execute()
 
 void TerError::Print()
 {
-  cerr<<"temp"<<endl;
+  cerr<<"Schedule an error to occur on time: "<<time_<<endl;
 }
 
 double TerError::GetTime()

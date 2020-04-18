@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef TIMEEVENT_H
+#define TIMEEVENT_H
 class TimeEvent
 {
 public:
@@ -12,4 +12,4 @@ private:
 	double time_;
 
 };
-
+#endif

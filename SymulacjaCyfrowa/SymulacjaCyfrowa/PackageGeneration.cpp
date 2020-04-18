@@ -5,7 +5,7 @@
 
 using namespace std;
 
-PackageGeneration::PackageGeneration(int time, WirelessNetwork* network,int id_base_station, TimeEventList list, ConditionalEvent* conditional)
+PackageGeneration::PackageGeneration(int time, WirelessNetwork* network,int id_base_station, TimeEventList* list, ConditionalEvent* conditional)
 {
 	time_ = time;
 	network_ = network;
@@ -28,5 +28,5 @@ void PackageGeneration::Execute()
 }
 void PackageGeneration::Print()
 {
-	cerr << "Zaplanowanie wygenerowania pakietu " << time_ << endl;
+	cerr << "Scheduling the package to be generated on time: " << time_ << endl;
 }

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHECKINGCHANNEL_H
+#define CHECKINGCHANNEL_H
 #include "TimeEvent.h"
 #include "Channel.h"
 using namespace std;
@@ -22,4 +23,4 @@ private:
 	ConditionalEvent* conditional_;
 	int id_base_station_;
 };
-
+#endif

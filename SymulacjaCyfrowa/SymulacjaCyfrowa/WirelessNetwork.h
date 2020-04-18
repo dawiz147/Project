@@ -1,4 +1,5 @@
-#pragma once
+#ifndef WIRELESSNETWORK_H
+#define WIRELESSNETWORK_H
 #include <vector>
 #include "BaseStation.h"
 #include "Channel.h"
@@ -34,4 +35,4 @@ private:
 	bool step_mode_;
 
 };
-
+#endif

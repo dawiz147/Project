@@ -1,5 +1,9 @@
-#pragma once
+#ifndef CHANNEL_H
+#define CHANNEL_H
 #include "Package.h"
+//#include <iostream>
+//#include <memory>
+//using namespace std;
 
 class Channel
 {
@@ -11,10 +15,11 @@ public:
 	void SetChannelFree(bool free);
 	Package* GetPackage();
 private:
-	Package* current_package_;		//Pointer to the currently transmitted packet
+	//vector<Package*> vector_package_;		//Pointer to the currently transmitted packet
+	Package* current_package_;
 	int retrasmission_id_;			//Variable that specifies the number of retransmissions that the packet performs
 	double transmission_time_;		//Variable specifying the transmission time
 	bool free_;						//Variable that indicates whether the channel is free
 	bool colission_;				//A variable that indicates whether a collision has occurred
 };
-
+#endif

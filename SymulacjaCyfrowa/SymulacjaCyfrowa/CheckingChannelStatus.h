@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHECKINGCHANNELSTATUS_H
+#define CHECKINGCHANNELSTATUS_H
 #include "TimeEvent.h"
 #include "WirelessNetwork.h"
 
@@ -15,4 +16,4 @@ private:
 	double time_;
 
 };
-
+#endif

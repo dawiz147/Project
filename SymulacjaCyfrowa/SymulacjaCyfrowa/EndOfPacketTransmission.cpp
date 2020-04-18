@@ -18,7 +18,7 @@ void EndOfPacketTransmission::Execute()
 
 void EndOfPacketTransmission::Print()
 {
-  cerr << "temp" << endl;
+  cerr << "Complete transmission of the packet on time" <<time_<< endl;
 }
 
 double EndOfPacketTransmission::GetTime()

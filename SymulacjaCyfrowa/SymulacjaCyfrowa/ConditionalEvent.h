@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONDITIONALEVENT_H
+#define CONDITIONALEVENT_H
 #include "WirelessNetwork.h"
 #include "TimeEventList.h"
 //#include "TimeEvent.h"
@@ -24,4 +25,4 @@ private:
   bool colision_;
   Package* colision_package_;
 };
-
+#endif

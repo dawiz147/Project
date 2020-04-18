@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PACKAGEGENERATION_H
+#define PACKAGEGENERATION_H
 #include "TimeEvent.h"
 #include <iostream>
 #include "Package.h"
@@ -7,10 +8,10 @@
 #include "ConditionalEvent.h"
 
 
-class PackageGeneration:TimeEvent
+class PackageGeneration:public TimeEvent
 {
 public:
-	PackageGeneration(int time, WirelessNetwork* network, int id_base_station, TimeEventList list, ConditionalEvent* conditional);
+	PackageGeneration(int time, WirelessNetwork* network, int id_base_station, TimeEventList* list, ConditionalEvent* conditional);
 	~PackageGeneration() = default;
 	double GetTime();
 	void Execute();
@@ -23,3 +24,4 @@ private:
 	TimeEventList* list_;
 	ConditionalEvent* conditional_;
 };
+#endif

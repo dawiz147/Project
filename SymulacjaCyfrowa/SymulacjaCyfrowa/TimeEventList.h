@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TIMEEVENTLIST_H
+#define TIMEEVENTLIST_H
 #include "TimeEvent.h"
 using namespace std;
 #include <iostream>
@@ -16,4 +17,4 @@ private:
   TimeEvent* last_;
   TimeEvent* temp_;
 };
-
+#endif

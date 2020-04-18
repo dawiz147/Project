@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENDOFPACKAGETRANSMISSION_H
+#define ENDOFPACKAGETRANSMISSION_H
 #include "TimeEvent.h"
 #include "WirelessNetwork.h"
 #include "ConditionalEvent.h"
@@ -16,4 +17,4 @@ private:
   WirelessNetwork* network_;
 ConditionalEvent* conditional_;
 };
-
+#endif

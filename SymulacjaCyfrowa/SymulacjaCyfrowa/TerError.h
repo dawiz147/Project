@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TERERROR_H
+#define TERERROR_H
 
 #include "WirelessNetwork.h"
 #include "TimeEvent.h"
@@ -18,4 +19,5 @@ private:
   ConditionalEvent* conditional_;
 
 };
+#endif
 

@@ -13,7 +13,11 @@ void CheckingChannelStatus::Execute()
 
 void CheckingChannelStatus::Print()
 {
-  cerr << "TO DO" << endl;
+  cerr << "the channel is: " ;
+  if (channel_->GetPackage == 1) {
+    cerr << "free" << endl;
+  }
+  else cerr << "busy" << endl;
 }
 
 double CheckingChannelStatus::GetTime()

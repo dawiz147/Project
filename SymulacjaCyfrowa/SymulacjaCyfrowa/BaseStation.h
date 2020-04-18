@@ -1,7 +1,8 @@
-#pragma once
+#ifndef BASESTATION_H
+#define BASESTATION_H
 #include "Package.h"
 #include <queue>
-
+#include <iostream>
 using namespace std;
 
 class BaseStation
@@ -20,4 +21,4 @@ private:
 	bool transmiting_;				//Variable meaning that the station has started transmission
 	Package* package_to_retransmission_;
 };
-
+#endif

@@ -73,21 +73,25 @@ int WirelessNetwork::GetNumberOfMaxRetrasmission()
 
 void WirelessNetwork::AddPacketToReceivingStation(Package* package, int id_station)
 {
+  cerr << "Package Creation" << endl;
   receiving_station_[id_station]->AddPacket(package);
 }
 
 void WirelessNetwork::AddPacketToBaseStation(Package* package, int id_station)
 {
+  cerr << "End of package transmission" << endl;
   base_stations_[id_station]->AddPackage(package);
 }
 
 void WirelessNetwork::SendPacket(int id_base_station)
 {
+  cerr << "Sending a package" << endl;
   channel_->AddPackageToChannel(base_stations_[id_base_station]->SendPackage());
 
 }
 
 void WirelessNetwork::AddToRetransmission(Package* packet, int id)
 {
+  cerr << "start sending the package" << endl;
   base_stations_[id]->Retransmition(packet);
 }
