@@ -4,9 +4,11 @@
 #include "WirelessNetwork.h"
 class TerError :public TimeEvent
 {
+  public:
   TerError(int time, Package* package, WirelessNetwork* network);
   void Execute();
   void Print();
+  double GetTime();
 private:
   double time_;
   Package* package_;

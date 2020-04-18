@@ -18,3 +18,13 @@ void TerError::Execute()
     // ustawiamy do usuniêcia
   }
 }
+
+void TerError::Print()
+{
+  cerr<<"temp"<<endl;
+}
+
+double TerError::GetTime()
+{
+  return time_;
+}

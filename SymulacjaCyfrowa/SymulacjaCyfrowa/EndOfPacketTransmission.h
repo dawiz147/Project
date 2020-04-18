@@ -3,9 +3,11 @@
 #include "WirelessNetwork.h"
 class EndOfPacketTransmission :public TimeEvent
 {
+public:
 EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base);
 void Execute();
 void Print();
+double GetTime();
 private:
   double time_;
   Channel* channel;

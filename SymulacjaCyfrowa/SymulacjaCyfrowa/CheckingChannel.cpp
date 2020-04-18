@@ -31,6 +31,10 @@ void CheckingChannel::Print()
   }
   else cerr << "Checking if the channel is free for more than 2 ms, time: " << time_ << endl;
 }
+double CheckingChannel::GetTime()
+{
+  return time_;
+}
 CheckingChannel::CheckingChannel(double time, bool first,Channel* channel, BaseStation* base)
 {
   time_ = time;

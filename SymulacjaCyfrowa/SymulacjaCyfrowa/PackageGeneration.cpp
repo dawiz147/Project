@@ -9,7 +9,12 @@ PackageGeneration::PackageGeneration(int time, BaseStation* base)
 	base_ = base;
 }
 
-void PackageGeneration::Execute() 
+double PackageGeneration::GetTime()
+{
+  return time_;
+}
+
+void PackageGeneration::Execute()
 {
 	Package* package = new Package();
 	base_->AddPackage(package);

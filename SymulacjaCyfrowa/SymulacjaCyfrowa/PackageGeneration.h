@@ -6,9 +6,10 @@
 
 class PackageGeneration:TimeEvent
 {
+public:
 	PackageGeneration(int time, BaseStation* base);
 	~PackageGeneration() = default;
-
+	double GetTime();
 	void Execute();
 	void Print();
 

@@ -13,6 +13,16 @@ void EndOfPacketTransmission::Execute()
   network_->AddPacketToReceivingStation(received,id_base_station_);
 }
 
+void EndOfPacketTransmission::Print()
+{
+  cerr << "temp" << endl;
+}
+
+double EndOfPacketTransmission::GetTime()
+{
+  return time_;
+}
+
 void Print()
 {
  

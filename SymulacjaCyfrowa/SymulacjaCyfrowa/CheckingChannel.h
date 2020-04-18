@@ -6,9 +6,11 @@ using namespace std;
 #include "BaseStation.h"
 class CheckingChannel :public TimeEvent
 {
+public:
 	CheckingChannel(double time,bool first, Channel* channel,BaseStation* base);
 	void Execute();
 	void Print();
+	double GetTime();
 private:
 	TimeEvent* next_;
 	const double KDifs = 2;

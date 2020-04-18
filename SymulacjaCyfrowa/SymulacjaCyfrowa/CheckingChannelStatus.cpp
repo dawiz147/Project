@@ -15,3 +15,8 @@ void CheckingChannelStatus::Print()
 {
   cerr << "TO DO" << endl;
 }
+
+double CheckingChannelStatus::GetTime()
+{
+  return time_;
+}
