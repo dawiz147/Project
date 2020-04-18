@@ -5,13 +5,15 @@ using namespace std;
 
 class TimeEventList
 {
+public:
   TimeEventList();
   void AddNewEvent(TimeEvent* event);
-  TimeEvent* GetFirstEvent();
+  //TimeEvent* GetFirstEvent();
   void PrintList();
+  void DeleteTimeEvent(double time);
 private:
   TimeEvent* first_;
   TimeEvent* last_;
-  TimeEvent* temp;
+  TimeEvent* temp_;
 };
 

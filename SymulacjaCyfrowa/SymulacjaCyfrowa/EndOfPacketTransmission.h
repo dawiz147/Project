@@ -1,6 +1,7 @@
 #pragma once
 #include "TimeEvent.h"
 #include "WirelessNetwork.h"
+//#include "ConditionalEvent.h"
 class EndOfPacketTransmission :public TimeEvent
 {
 public:
@@ -13,5 +14,6 @@ private:
   Channel* channel;
   int id_base_station_;
   WirelessNetwork* network_;
+ // ConditionalEvent* conditional_;
 };
 

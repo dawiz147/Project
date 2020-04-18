@@ -24,15 +24,15 @@ void TimeEventList::AddNewEvent(TimeEvent* event)
     last_ = event;
   }
   //dodawanie w œrodku
-  temp = first_;
-  while (temp->next_->GetTime() < event->GetTime())
+  temp_ = first_;
+  while (temp_->next_->GetTime() < event->GetTime())
   {
-    temp = temp->next_;
+    temp_ = temp_->next_;
   }
-  temp->next_->prev_ = event;
-  event->next_ = temp->next_;
-  event->prev_ = temp;
-  temp->next_ = event;
+  temp_->next_->prev_ = event;
+  event->next_ = temp_->next_;
+  event->prev_ = temp_;
+  temp_->next_ = event;
 
 
 }
@@ -40,11 +40,27 @@ void TimeEventList::AddNewEvent(TimeEvent* event)
 void TimeEventList::PrintList()
 {
   if (first_ == nullptr) cerr << "list is empty" << endl;
-  temp = first_;
-  while (temp != last_)
+  else
   {
-    temp->Print();
-    temp = temp->next_;
+    temp_ = first_;
+    while (temp_ != last_)
+    {
+      temp_->Print();
+      temp_ = temp_->next_;
+    }
+    temp_->Print();
   }
-  temp->Print();
+}
+
+void TimeEventList::DeleteTimeEvent(double time)
+{
+  temp_ = first_;
+  
+  while (temp_->GetTime() != time)
+  {
+    temp_ = temp_->next_;
+  }
+  temp_->next_->prev_ = temp_->prev_;
+  temp_->prev_->next_ = temp_->next_;
+  delete temp_;
 }

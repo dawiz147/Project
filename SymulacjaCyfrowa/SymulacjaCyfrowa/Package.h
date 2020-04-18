@@ -2,9 +2,10 @@
 class Package
 {
 public:
-	Package();							//Package class constructor
+	Package(int id_station);							//Package class constructor
 	~Package() = default;				//Package class destroyer
 	int GetLR();
+	int GetIdStation();
 	void IncrementLR();
 
 private:
@@ -13,5 +14,6 @@ private:
 	int nr_retransmission_;				//Variable describing the number of the current retransmission
 	double CTPk_;						//Variable describing the duration of the transmission
 	int source_transmiter_;				//Variable describing which of the broadcasting stations the packet was sent from
+	int id_station_;
 };
 

@@ -34,7 +34,7 @@ void WirelessNetwork::PrintInfoAboutSystem()
       ofstream save("debug.txt", ios_base::app);
 
       save << "System initialization: " << endl;
-      save << "Nuber of base stations and receiving station: "<< kNumberOfStations_ << endl;
+      save << "Nuber of base stations and receiving station: " << kNumberOfStations_ << endl;
       save << "Maximum number of retransmission package: " << max_retrasmission_ << endl;
       save.close();
     }
@@ -83,5 +83,10 @@ void WirelessNetwork::AddPacketToBaseStation(Package* package, int id_station)
 void WirelessNetwork::SendPacket(int id_base_station)
 {
   channel_->AddPackageToChannel(base_stations_[id_base_station]->SendPackage());
-  
+
+}
+
+void WirelessNetwork::AddToRetransmission(Package* packet, int id)
+{
+  base_stations_[id]->Retransmition(packet);
 }

@@ -5,12 +5,15 @@ EndOfPacketTransmission::EndOfPacketTransmission(double time, WirelessNetwork* w
   channel = wireless->GetChannel();
   id_base_station_ = id_base;
   network_ = wireless;
+  //conditional_ = conditional;
+
 }
 void EndOfPacketTransmission::Execute()
 {
   channel->SetChannelFree(true);
   Package* received = channel->GetPackage();
   network_->AddPacketToReceivingStation(received,id_base_station_);
+  //conditional_->ACKMessage();
 }
 
 void EndOfPacketTransmission::Print()

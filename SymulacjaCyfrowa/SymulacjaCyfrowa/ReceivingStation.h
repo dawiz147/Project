@@ -1,5 +1,7 @@
 #pragma once
 #include "Package.h"
+//#include "ConditionalEvent.h"
+
 class ReceivingStation
 {
 public:
@@ -7,5 +9,6 @@ public:
   void AddPacket(Package* packet);
 private:
   Package* packet_received_;
+ // ConditionalEvent* conditional_;
 };
 

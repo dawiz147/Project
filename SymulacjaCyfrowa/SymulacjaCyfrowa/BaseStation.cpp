@@ -17,3 +17,8 @@ Package* BaseStation::SendPackage()
 	package_.pop();
 	return package;
 }
+
+void BaseStation::Retransmition(Package* package)
+{
+	package_to_retransmission_ = package;
+}

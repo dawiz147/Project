@@ -1,11 +1,12 @@
 #pragma once
-#include "TimeEvent.h"
-#include "Package.h"
+//#include "Package.h"
 #include "WirelessNetwork.h"
+#include "TimeEvent.h"
+//#include "ConditionalEvent.h"
 class TerError :public TimeEvent
 {
   public:
-  TerError(int time, Package* package, WirelessNetwork* network);
+  TerError(double time, WirelessNetwork* network);
   void Execute();
   void Print();
   double GetTime();
@@ -13,5 +14,7 @@ private:
   double time_;
   Package* package_;
   WirelessNetwork* network_;
+  Channel* channel_;
+
 };
 
