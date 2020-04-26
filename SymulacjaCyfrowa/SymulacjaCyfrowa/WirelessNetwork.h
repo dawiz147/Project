@@ -23,16 +23,24 @@ public:
 	void AddPacketToBaseStation(Package* package, int id_station);
 	void SendPacket(int id_base_station);
 	void AddToRetransmission(Package* packet,int id);
+	int GetTypeInfo();
+	int GetTypePrint();
+	int GetStepMode();
+	double GetTime();
+	int GetIdGeneratedPackage();
+	int GetNumberOfStations();
+	void SetTime(double time);
 private:
 	vector<BaseStation*> base_stations_;				//A vector that stores pointers to each broadcasting station
 	double time_;										//A variable that specifies the overall system time
-	const int kNumberOfStations_ = rand() % 10;						//Variable specifying the number of broadcasting stations
+	const int kNumberOfStations_ = 5;						//Variable specifying the number of broadcasting stations
 	Channel* channel_;						//Channel indicator
 	vector<ReceivingStation*> receiving_station_;		//Pointer to receiving station
 	const int max_retrasmission_ = rand() % 50;						//Constant describing the number of retransmissions allowed
 	int type_information_;
 	int type_print_;
-	bool step_mode_;
+	int step_mode_;
+	int id_genereted_package_;
 
 };
 #endif

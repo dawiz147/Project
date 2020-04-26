@@ -3,10 +3,11 @@
 class Package
 {
 public:
-	Package(int id_station);							//Package class constructor
+	Package(int id_station, int id_package);							//Package class constructor
 	~Package() = default;				//Package class destroyer
 	int GetLR();
 	int GetIdStation();
+	int GetId();
 	void IncrementLR();
 
 private:

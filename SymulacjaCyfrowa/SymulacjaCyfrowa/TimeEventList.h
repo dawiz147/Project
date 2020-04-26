@@ -12,6 +12,7 @@ public:
   //TimeEvent* GetFirstEvent();
   void PrintList();
   void DeleteTimeEvent(double time);
+  TimeEvent* GetFirst();
 private:
   TimeEvent* first_;
   TimeEvent* last_;
