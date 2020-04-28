@@ -1,6 +1,5 @@
 #include "PackageGeneration.h"
-//#include"TimeEvent.h"
-//#include"TimeEventList.h"
+
 
 
 using namespace std;
@@ -11,6 +10,7 @@ PackageGeneration::PackageGeneration(int time, WirelessNetwork* network,int id_b
 	network_ = network;
 	id_base_station_ = id_base_station;
 	conditional_= conditional;
+  list_ = list;
 }
 
 double PackageGeneration::GetTime()
@@ -25,21 +25,30 @@ void PackageGeneration::Execute()
   {
     if (network_->GetTypePrint() == 1)
     {
-      cerr << "Packet transmission completed id:" << package->GetId() << endl;
+      cerr << "Packet generation id:" << package->GetId() << endl;
     }
     else
     {
       ofstream save("debug.txt", ios_base::app);
-      save << "packet transmission completed id:" << package->GetId() << endl;
+      save << "packet generation id:" << package->GetId() << endl;
       save.close();
     }
   }
 	network_->AddPacketToBaseStation(package,id_base_station_);
-	conditional_->AddPacketToSend(id_base_station_);
+  TimeEvent* time_event = new PackageGeneration(time_ + network_->GetTimeGenerationPackage(), network_, id_base_station_, list_, conditional_);
+  list_->AddNewEvent(time_event);
+  if (network_->CheckingStation(id_base_station_)) //sprawdzanie czy dana stacja nas³uchuje ju¿ kana³u w celu przes³ania pakietu
+  {
+    //nic nie rób stacja sprawdza ju¿ kana³
 
+  }
+  else
+  {
+    network_->AddBaseStationChecking(id_base_station_);
+    TimeEvent* event = new CheckingChannel(time_, network_, id_base_station_, conditional_, 0,list_);
+    list_->AddNewEvent(event);
 
-	// ZAPLANUJ DODANIE KOLEJNEGO WYGERNORAWNIA PAKIETU ZGODZIE Z CGPk
-	// zaplanowanie zdarzenia czasowego sprawdzanie zajêtoœci kana³u 
+  }
 }
 void PackageGeneration::Print()
 {

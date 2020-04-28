@@ -1,33 +1,20 @@
 #include "EndOfPacketTransmission.h"
-EndOfPacketTransmission::EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base, ConditionalEvent* conditional)
+EndOfPacketTransmission::EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base)
 {
   time_ = time;
   channel = wireless->GetChannel();
   id_base_station_ = id_base;
   network_ = wireless;
-  conditional_ = conditional;
+
 
 }
 void EndOfPacketTransmission::Execute()
 {
   channel->SetChannelFree(true);
-  Package* received = channel->GetPackage();
-  if (network_->GetTypeInfo() == 2)
-  {
-    if (network_->GetTypePrint() == 1)
-    {
-      cerr << "Package with id: " << received->GetId()<<"has been generated. Added to station with id: "<<id_base_station_ << endl;
-    }
-    else
-    {
-      ofstream save("debug.txt", ios_base::app);
-      save << "Package with id: " << received->GetId() << "has been generated. Added to station with id: " << id_base_station_ << endl;
-      save.close();
-    }
-  }
-
+  cerr << "id " << id_base_station_ << endl;
+  Package* received = channel->GetPackage(id_base_station_);
   network_->AddPacketToReceivingStation(received,id_base_station_);
-  conditional_->ACKMessage();
+  network_->SendACK(id_base_station_);
 }
 
 void EndOfPacketTransmission::Print()

@@ -6,6 +6,7 @@
 #include "WirelessNetwork.h"
 #include "TimeEventList.h"
 #include "ConditionalEvent.h"
+#include "CheckingChannel.h"
 
 
 class PackageGeneration:public TimeEvent

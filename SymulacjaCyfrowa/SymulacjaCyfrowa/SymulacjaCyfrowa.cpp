@@ -48,13 +48,17 @@ int main()
     cerr << i << endl;
     time_event->AddNewEvent(generate);
   }
-  time_event->PrintList();
+
   // pętla symulacyjna
   while (wireless_network->GetTime()<800000)
   {
     generate = time_event->GetFirst();
     wireless_network->SetTime(generate->GetTime());
     generate->Execute();
-    cin.get();
+    conditional_event->SetTime(wireless_network->GetTime());
+    conditional_event->CheckConditionalEvent();
+    time_event->PrintList();
+    if (step_mode == 1) cin.get();
+    else;
   }
 }

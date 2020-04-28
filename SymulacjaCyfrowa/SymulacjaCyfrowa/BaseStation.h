@@ -13,6 +13,10 @@ public:
 	void AddPackage(Package* package);
 	Package* SendPackage();
 	void Retransmition(Package* package);
+	void SetAckMessage();
+	bool CheckACK();
+	int GetFirtPackageID();
+
 private:
 	queue <Package*> package_;		//A queue that will store packets to be sent through the channel
 	int id_base_station_;			//Variable specifying the number of the sending station
@@ -20,5 +24,7 @@ private:
 	double CGPk_;					//Random variable describing the packet generation time
 	bool transmiting_;				//Variable meaning that the station has started transmission
 	Package* package_to_retransmission_;
+	bool ACK_message_;
+	bool temp_;
 };
 #endif

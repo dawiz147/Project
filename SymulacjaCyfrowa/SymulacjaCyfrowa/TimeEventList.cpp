@@ -38,7 +38,6 @@ void TimeEventList::AddNewEvent(TimeEvent* event)
   event->prev_ = temp_->prev_;
   temp_->prev_->next_ = event;
   temp_->prev_ = event;
-  temp_ = nullptr;
   }
 
 }

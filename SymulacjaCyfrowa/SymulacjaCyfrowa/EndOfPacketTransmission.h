@@ -2,11 +2,11 @@
 #define ENDOFPACKAGETRANSMISSION_H
 #include "TimeEvent.h"
 #include "WirelessNetwork.h"
-#include "ConditionalEvent.h"
+
 class EndOfPacketTransmission :public TimeEvent
 {
 public:
-EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base, ConditionalEvent* conditional);
+EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base);
 void Execute();
 void Print();
 double GetTime();
@@ -15,6 +15,6 @@ private:
   Channel* channel;
   int id_base_station_;
   WirelessNetwork* network_;
-ConditionalEvent* conditional_;
+
 };
 #endif

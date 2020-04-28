@@ -5,6 +5,7 @@ Channel::Channel()
 	Package* current_package_ = nullptr;
 	retrasmission_id_ = 0 ;
 	transmission_time_ = 0 ;
+	free_ = true;
 	
 }
 bool Channel::GetInformationOnChannelUsage()
@@ -14,7 +15,11 @@ bool Channel::GetInformationOnChannelUsage()
 
 void Channel::AddPackageToChannel(Package* package)
 {
-	current_package_ = package;
+	vector_package_.push_back(package);
+	if (vector_package_.size() > 1)
+	{
+		colission_ = true;
+	}
 	free_ = false;
 }
 
@@ -23,10 +28,46 @@ void Channel::SetChannelFree(bool free)
 	free_ = free;
 }
 
-Package* Channel::GetPackage()
+Package* Channel::GetPackage(int id)
 {
-	Package* package_to_send = current_package_;
-	current_package_ = nullptr;
+	for (unsigned i = 0; i < vector_package_.size(); i++)
+	{
+		if (vector_package_[i]->GetIdStation() == id)
+		{
+			package_to_send_ = vector_package_[i];
+			vector_package_.erase(vector_package_.begin() + i);
+
+		}
+	}
+	if (vector_package_.empty())free_= true;
+	return package_to_send_;
+}
+
+void Channel::SendAckMessage()
+{
+	free_ = false;
+	ACK_ = true;
+}
+
+void Channel::FinishSendingAckMessage()
+{
 	free_ = true;
-	return package_to_send;
+	ACK_ = false;
+}
+
+bool Channel::GetColission()
+{
+	return colission_;
+}
+
+unsigned Channel::GetSize()
+{
+	return vector_package_.size();
+}
+
+Package* Channel::GetPackageToRetransmison()
+{
+	package_to_send_ = vector_package_[0];
+	vector_package_.erase(vector_package_.begin());
+	return package_to_send_;
 }
