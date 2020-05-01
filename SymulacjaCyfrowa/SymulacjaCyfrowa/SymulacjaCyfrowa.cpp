@@ -1,11 +1,11 @@
 ﻿#include <iostream>
-
 using namespace std;
 #include "WirelessNetwork.h"
 #include "TimeEventList.h"
 #include "TimeEvent.h"
 #include "PackageGeneration.h"
 #include "ConditionalEvent.h"
+
 int main()
 {
   int type_information;
@@ -45,7 +45,6 @@ int main()
   for (int i = 0; i < wireless_network->GetNumberOfStations(); i++)
   {
     generate = new PackageGeneration(0, wireless_network, i, time_event, conditional_event);
-    cerr << i << endl;
     time_event->AddNewEvent(generate);
   }
 
@@ -57,7 +56,9 @@ int main()
     generate->Execute();
     conditional_event->SetTime(wireless_network->GetTime());
     conditional_event->CheckConditionalEvent();
-    time_event->PrintList();
+    if (type_information != 3) {
+      time_event->PrintList();
+    }
     if (step_mode == 1) cin.get();
     else;
   }

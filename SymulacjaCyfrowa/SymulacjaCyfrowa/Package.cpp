@@ -10,6 +10,13 @@ Package::Package(int id_station,int id_package)
 	id_station_ = id_station;
 }
 
+Package::~Package()
+{
+	ofstream save("package.txt", ios_base::app);
+	save << "Package finish id: " << id_package_ << endl;
+	save.close();
+}
+
 
 
 int Package::GetLR()

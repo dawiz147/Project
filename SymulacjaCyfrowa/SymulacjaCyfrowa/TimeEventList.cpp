@@ -14,6 +14,7 @@ void TimeEventList::AddNewEvent(TimeEvent* event)
   else if (first_->GetTime() >= event->GetTime())
   {
     event->next_ = first_;
+    first_->prev_ = event;
     first_ = event;
 
   }
@@ -73,10 +74,10 @@ void TimeEventList::DeleteTimeEvent(double time)
 TimeEvent* TimeEventList::GetFirst()
 {
   if (first_ != nullptr) {
-    TimeEvent* first_event_from_list = first_;
+    temp_ = first_;
     first_ = first_->next_;
-    first_event_from_list->next_ = nullptr;
-    first_event_from_list->prev_ = nullptr;
-    return first_event_from_list;
+    temp_->next_ = nullptr;
+    temp_->prev_ = nullptr;
+    return temp_;
   }
 }

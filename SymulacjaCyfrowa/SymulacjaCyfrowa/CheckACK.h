@@ -4,6 +4,7 @@
 #include "WirelessNetwork.h"
 #include "TimeEvent.h"
 
+
 class CheckACK :public TimeEvent
 {
   public:
@@ -15,6 +16,7 @@ private:
   double time_;
   WirelessNetwork* network_;
   int id_;
+  Package* delete_;
 };
 #endif
 

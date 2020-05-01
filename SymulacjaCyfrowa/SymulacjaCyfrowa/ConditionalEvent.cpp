@@ -1,5 +1,5 @@
 #include "ConditionalEvent.h"
-
+using namespace std;
 ConditionalEvent::ConditionalEvent(WirelessNetwork* network, TimeEventList* time_event_list)
 {
   network_ = network;
@@ -22,15 +22,19 @@ void ConditionalEvent::CheckConditionalEvent()
     event_ = new EndOfPacketTransmission(time_, network_, id_base_station_send_packet_);
     time_event_list_->AddNewEvent(event_);
     event_ = new CheckACK(time_ + 1, network_, id_base_station_send_packet_);
+    time_event_list_->PrintList();
+
     time_event_list_->AddNewEvent(event_);
     id_base_station_send_packet_ = -1;
   }
-  if (network_->CheckBaseStationTer() != -1) // zdarzenie warunkowe wyst¹pienia b³êdu TER
+  if ((network_->CheckBaseStationTer() != -1) && (network_->GetCheckACK() == true)) // zdarzenie warunkowe wyst¹pienia b³êdu TER
   {
+    network_->SetCheckACK(false);
     int temp_ = network_->CheckBaseStationTer();
     if (network_->CheckTerError(network_->CheckBaseStationTer()))
     {
-      cerr << "Pakiet poprawnie dostarczony" << endl;
+      if(network_->GetTypeInfo()!=3)
+      cerr << "package correctly delivered " << endl;
     }
     else
     {

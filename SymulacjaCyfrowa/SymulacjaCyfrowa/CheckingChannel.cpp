@@ -21,7 +21,10 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 rz, false
       counter_++;
       if (counter_ >= 4)
       {
-        cerr << "Send Package from station: " << id_base_station_ << endl;
+        if (network_->GetTypeInfo() != 3) {
+          cerr << "Send Package from station: " << id_base_station_ << endl;
+        }
+        network_->DeleteCheckingStation(id_base_station_);
         conditional_->AddPacketToSend(id_base_station_);
       }
       else
@@ -43,15 +46,17 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 rz, false
 }
 void CheckingChannel::Print()
 {
-  if (network_->GetTypePrint() == 1)
-  {
-    cerr << "Create time event checking channel time: "<<time_ << "id base station: " << id_base_station_ << "counter: "<<counter_<< endl;
-  }
-  else
-  { 
-  ofstream save("debug.txt", ios_base::app);
-  save << "Create time event checking channel time: " << time_ <<"id base station: "<<id_base_station_ << "counter: " << counter_ << endl;
-  save.close();
+  if (network_->GetTypeInfo() != 3) {
+    if (network_->GetTypePrint() == 1)
+    {
+      cerr << "Create time event checking channel time: " << time_ << "id base station: " << id_base_station_ << "counter: " << counter_ << endl;
+    }
+    else
+    {
+      ofstream save("debug.txt", ios_base::app);
+      save << "Create time event checking channel time: " << time_ << "id base station: " << id_base_station_ << "counter: " << counter_ << endl;
+      save.close();
+    }
   }
 }
 double CheckingChannel::GetTime()

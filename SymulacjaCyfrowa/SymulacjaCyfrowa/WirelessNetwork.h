@@ -51,6 +51,10 @@ public:
 	Package* GetPackageToTer(int id);
 	bool GetColission();
 	void SendToRetransmission();
+	bool GetCheckACK();
+	void SetCheckACK(bool can_you_check_ack);
+
+	
 private:
 	vector<BaseStation*> base_stations_;				//A vector that stores pointers to each broadcasting station
 	double time_;										//A variable that specifies the overall system time
@@ -67,6 +71,7 @@ private:
 	int base_station_to_send_ack_;
 	int temp_;
 	int id_base_station_to_check_ter_=-1;
+	bool can_you_check_ack_=false;
 	Package* temp_package_;
 };
 #endif

@@ -52,14 +52,16 @@ void PackageGeneration::Execute()
 }
 void PackageGeneration::Print()
 {
-  if (network_->GetTypePrint() == 1)
-  {
-    cerr << "It is planned to generate the package on time" << time_ << endl;
-  }
-  else
-  {
-    ofstream save("debug.txt", ios_base::app);
-    save << "It is planned to generate the package on time" << time_ << endl;
-    save.close();
+  if (network_->GetTypeInfo() != 3) {
+    if (network_->GetTypePrint() == 1)
+    {
+      cerr << "It is planned to generate the package on time" << time_ << endl;
+    }
+    else
+    {
+      ofstream save("debug.txt", ios_base::app);
+      save << "It is planned to generate the package on time" << time_ << endl;
+      save.close();
+    }
   }
 }

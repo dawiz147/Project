@@ -14,10 +14,11 @@ void FinishSendACK::Execute()
 
 void FinishSendACK::Print()
 {
-  cerr << " " << endl;
+  cerr << "Schedule an finished send ack messege: " << time_ << endl;
+
 }
 
 double FinishSendACK::GetTime()
 {
-  return 0.0;
+  return time_;
 }

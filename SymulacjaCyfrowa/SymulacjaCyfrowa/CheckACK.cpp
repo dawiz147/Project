@@ -10,7 +10,9 @@ void CheckACK::Execute()
 {
   if (network_->CheckACK(id_) == true)
   {
+    network_->SetCheckACK(true);
     if (network_->GetTypeInfo() != 3) cerr << "package from base station id:" << id_ << " has been correctly transported" << endl;
+    delete_=network_->GetPackageToTer(id_);
   }
   else
   {

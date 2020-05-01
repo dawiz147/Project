@@ -1,10 +1,14 @@
 #ifndef PACKAGE_H
 #define PACKAGE_H
+#include <iostream>
+#include <fstream>
+
+using namespace std;
 class Package
 {
 public:
 	Package(int id_station, int id_package);							//Package class constructor
-	~Package() = default;				//Package class destroyer
+	~Package();				//Package class destroyer
 	int GetLR();
 	int GetIdStation();
 	int GetId();

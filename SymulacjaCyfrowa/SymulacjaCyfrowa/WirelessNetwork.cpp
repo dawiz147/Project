@@ -297,3 +297,15 @@ void WirelessNetwork::SendToRetransmission()
     this->AddToRetransmission(temp_package_, temp_package_->GetIdStation());
   }
 }
+
+bool WirelessNetwork::GetCheckACK()
+{
+  return can_you_check_ack_;
+}
+
+void WirelessNetwork::SetCheckACK(bool can_you_check_ack)
+{
+  can_you_check_ack_ = can_you_check_ack;
+}
+
+
