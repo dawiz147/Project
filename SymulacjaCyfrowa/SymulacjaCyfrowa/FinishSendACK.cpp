@@ -14,8 +14,20 @@ void FinishSendACK::Execute()
 
 void FinishSendACK::Print()
 {
-  cerr << "Schedule an finished send ack messege: " << time_ << endl;
 
+
+  if (network_->GetTypeInfo() != 3) {
+    if (network_->GetTypePrint() == 1)
+    {
+      cerr << "Schedule an finished send ack messege: " << time_ << endl;
+    }
+    else
+    {
+      ofstream save("debug.txt", ios_base::app);
+      save << "Schedule an finished send ack messege: " << time_ << endl;
+      save.close();
+    }
+  }
 }
 
 double FinishSendACK::GetTime()

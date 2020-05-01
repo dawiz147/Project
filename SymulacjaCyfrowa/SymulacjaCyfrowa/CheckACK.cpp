@@ -11,7 +11,14 @@ void CheckACK::Execute()
   if (network_->CheckACK(id_) == true)
   {
     network_->SetCheckACK(true);
-    if (network_->GetTypeInfo() != 3) cerr << "package from base station id:" << id_ << " has been correctly transported" << endl;
+    if (network_->GetTypeInfo() != 3)
+    {
+      if (network_->GetTypePrint() != 2)
+      {
+        cerr << "package from base station id:" << id_ << " has been correctly transported" << endl;
+      }
+    }
+
     delete_=network_->GetPackageToTer(id_);
   }
   else
@@ -22,7 +29,16 @@ void CheckACK::Execute()
 
 void CheckACK::Print()
 {
-  cerr<<"Schedule an check ack messege: "<<time_<<endl;
+  if (network_->GetTypePrint() == 1)
+  {
+    cerr << "Schedule an check ack messege: " << time_ << endl;
+  }
+  else
+  {
+    ofstream save("debug.txt", ios_base::app);
+    save << "Schedule an check ack messege: " << time_ << endl;
+    save.close();
+  }
 }
 
 double CheckACK::GetTime()

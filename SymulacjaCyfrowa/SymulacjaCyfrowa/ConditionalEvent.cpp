@@ -33,8 +33,11 @@ void ConditionalEvent::CheckConditionalEvent()
     int temp_ = network_->CheckBaseStationTer();
     if (network_->CheckTerError(network_->CheckBaseStationTer()))
     {
-      if(network_->GetTypeInfo()!=3)
-      cerr << "package correctly delivered " << endl;
+      if (network_->GetTypeInfo() != 3)
+      {
+        if(network_->GetTypePrint()!=2)
+        cerr << "package correctly delivered " << endl;
+      }
     }
     else
     {

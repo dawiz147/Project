@@ -22,7 +22,17 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 rz, false
       if (counter_ >= 4)
       {
         if (network_->GetTypeInfo() != 3) {
-          cerr << "Send Package from station: " << id_base_station_ << endl;
+          if (network_->GetTypePrint() == 1)
+          {
+            cerr << "Send Package from station: " << id_base_station_ << endl;
+          }
+          else
+          {
+            ofstream save("debug.txt", ios_base::app);
+            save << "Send Package from station: " << id_base_station_ << endl;
+            save.close();
+          }
+         
         }
         network_->DeleteCheckingStation(id_base_station_);
         conditional_->AddPacketToSend(id_base_station_);

@@ -36,8 +36,3 @@ double EndOfPacketTransmission::GetTime()
 {
   return time_;
 }
-
-void Print()
-{
- 
-}
