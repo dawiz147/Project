@@ -9,6 +9,7 @@ public:
   ReceivingStation();
   void AddPacket(Package* packet);
   Package* GetPackage();
+  void SaveTime(double time);
 private:
   Package* packet_received_;
  // ConditionalEvent* conditional_;

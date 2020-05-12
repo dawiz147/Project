@@ -15,3 +15,8 @@ Package* ReceivingStation::GetPackage()
 {
   return packet_received_;
 }
+
+void ReceivingStation::SaveTime(double time)
+{
+  packet_received_->ExitChannel(time);
+}

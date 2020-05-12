@@ -19,6 +19,8 @@ public:
 	bool GetColission();
 	unsigned GetSize();
 	Package* GetPackageToRetransmison();
+	void SetSeed(int seed);
+	int& GetSeed();
 private:
 	vector<Package*> vector_package_;		//Pointer to the currently transmitted packet
 	int retrasmission_id_;			//Variable that specifies the number of retransmissions that the packet performs
@@ -27,5 +29,6 @@ private:
 	bool colission_;				//A variable that indicates whether a collision has occurred
 	bool ACK_;
 	Package* package_to_send_;
+	int seed_;
 };
 #endif

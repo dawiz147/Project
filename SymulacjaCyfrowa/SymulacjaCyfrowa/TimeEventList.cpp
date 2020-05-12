@@ -31,7 +31,7 @@ void TimeEventList::AddNewEvent(TimeEvent* event)
   //dodawanie w œrodku
   else{
   temp_ = first_;
-  while (temp_->GetTime() <= event->GetTime())
+  while (temp_->GetTime() < event->GetTime())
   {
     temp_ = temp_->next_;
   }

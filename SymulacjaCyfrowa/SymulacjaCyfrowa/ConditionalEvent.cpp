@@ -15,7 +15,7 @@ void ConditionalEvent::CheckConditionalEvent()
   if (id_base_station_send_packet_ != -1) // sprawdzanie czy jakaœ stacja bazowa ma wys³aæ swój pakiet
   {
     temp_ = network_->CheckIdFromBaseStation(id_base_station_send_packet_);
-    network_->SendPacket(id_base_station_send_packet_);
+    network_->SendPacket(id_base_station_send_packet_,time_);
     network_->DeleteCheckingStation(id_base_station_send_packet_);
 
     time_ = time_+(rand() % 10) + 1;

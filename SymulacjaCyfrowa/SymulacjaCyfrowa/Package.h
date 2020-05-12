@@ -8,11 +8,16 @@ class Package
 {
 public:
 	Package(int id_station, int id_package);							//Package class constructor
-	~Package();				//Package class destroyer
+	~Package()=default;				//Package class destroyer
 	int GetLR();
 	int GetIdStation();
 	int GetId();
 	void IncrementLR();
+	void InBuffor(double time);
+	void ExitBuffor(double time);
+	void ExitChannel(double time);
+	double GetExitBuffor();
+	double GetExitChannel();
 
 private:
 	int id_package_;					//A variable that specifies the package number
@@ -21,5 +26,8 @@ private:
 	double CTPk_;						//Variable describing the duration of the transmission
 	int source_transmiter_;				//Variable describing which of the broadcasting stations the packet was sent from
 	int id_station_;
+	double in_buffor_;
+	double exit_buffor_;
+	double exit_channel_;
 };
 #endif

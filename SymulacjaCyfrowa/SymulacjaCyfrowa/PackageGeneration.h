@@ -12,7 +12,7 @@
 class PackageGeneration:public TimeEvent
 {
 public:
-	PackageGeneration(int time, WirelessNetwork* network, int id_base_station, TimeEventList* list, ConditionalEvent* conditional);
+	PackageGeneration(double time, WirelessNetwork* network, int id_base_station, TimeEventList* list, ConditionalEvent* conditional);
 	~PackageGeneration() = default;
 	double GetTime();
 	void Execute();
@@ -20,6 +20,7 @@ public:
 
 private:
 	double time_;
+	double time_temp;
 	WirelessNetwork* network_;
 	int id_base_station_;
 	TimeEventList* list_;

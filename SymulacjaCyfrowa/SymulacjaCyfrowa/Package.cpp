@@ -10,12 +10,7 @@ Package::Package(int id_station,int id_package)
 	id_station_ = id_station;
 }
 
-Package::~Package()
-{
-	ofstream save("package.txt", ios_base::app);
-	save << "Package finish id: " << id_package_ << endl;
-	save.close();
-}
+
 
 
 
@@ -37,4 +32,29 @@ int Package::GetId()
 void Package::IncrementLR()
 {
 	nr_retransmission_++;
+}
+
+void Package::InBuffor(double time)
+{
+	in_buffor_ = time;
+}
+
+void Package::ExitBuffor(double time)
+{
+	exit_buffor_ = time- in_buffor_;
+}
+
+void Package::ExitChannel(double time)
+{
+	exit_channel_ = time- in_buffor_;
+}
+
+double Package::GetExitBuffor()
+{
+	return exit_buffor_;
+}
+
+double Package::GetExitChannel()
+{
+	return exit_channel_;
 }

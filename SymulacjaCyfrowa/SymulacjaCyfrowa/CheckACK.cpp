@@ -15,14 +15,32 @@ void CheckACK::Execute()
     {
       if (network_->GetTypePrint() != 2)
       {
-        cerr << "package from base station id:" << id_ << " has been correctly transported" << endl;
+        cerr << "package from base station id: " << id_ << " has been correctly transported" << endl;
       }
     }
 
     delete_=network_->GetPackageToTer(id_);
+    ofstream save("DeletedPackage.txt", ios_base::app);
+    save << "id deleted package: " << delete_->GetId() << endl;
+    save << "from station: " << delete_->GetIdStation() << endl;
+    save.close();
+    network_->IncrementNumberOfPacket();
+    network_->IncrementSumOfRetransmission(delete_->GetLR());
+    time_one_= delete_->GetExitBuffor();
+    time_sec_= delete_->GetExitChannel();
+    network_->AddAverageDelayBuffor(time_one_);
+    network_->AddAverageDelayChannel(time_sec_);
+    delete delete_;
   }
   else
   {
+    if (network_->GetTypeInfo() != 3)
+    {
+      if (network_->GetTypePrint() != 2)
+      {
+        cerr << "package from base station id: " << id_ << " did not arrive correctly. error occurrence ter" << endl;
+      }
+    }
     network_->SetIdTerError(id_);
   }
 }

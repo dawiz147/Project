@@ -17,6 +17,8 @@ private:
   WirelessNetwork* network_;
   int id_;
   Package* delete_;
+  double time_one_;
+  double time_sec_;
 };
 #endif
 

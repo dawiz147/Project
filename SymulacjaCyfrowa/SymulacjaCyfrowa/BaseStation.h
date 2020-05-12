@@ -11,11 +11,19 @@ public:
 	BaseStation();					//BaseStation class constructor
 	~BaseStation() = default;		//BaseStation class destroyer
 	void AddPackage(Package* package);
-	Package* SendPackage();
+	Package* SendPackage(double time);
 	void Retransmition(Package* package);
 	void SetAckMessage();
 	bool CheckACK();
 	int GetFirtPackageID();
+	void SetSeedExp(int seed);
+	void SetSeedNormal(int seed);
+	int& GetSeedExp();
+	int& GetSeedNormal();
+	void AddError();
+	void AddPackageError();
+	int GetErrorRate();
+	int GetPackageError();
 
 private:
 	queue <Package*> package_;		//A queue that will store packets to be sent through the channel
@@ -26,5 +34,9 @@ private:
 	Package* package_to_retransmission_;
 	bool ACK_message_;
 	bool temp_;
+	int seed_exp_;
+	int seed_normal_;
+	int error_rate_;
+	int all_package_;
 };
 #endif

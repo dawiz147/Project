@@ -71,3 +71,13 @@ Package* Channel::GetPackageToRetransmison()
 	vector_package_.erase(vector_package_.begin());
 	return package_to_send_;
 }
+
+void Channel::SetSeed(int seed)
+{
+	seed_ = seed;
+}
+
+int& Channel::GetSeed()
+{
+	return seed_;
+}

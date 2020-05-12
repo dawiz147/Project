@@ -4,6 +4,9 @@ WirelessNetwork::WirelessNetwork(int type_information, int type_print, int step_
 {
   base_station_to_send_ack_ = -1;
   id_base_station_to_retransmision_ter_error_ = -1;
+  id_base_station_to_check_ter_ = -1;
+  id_base_station_send_packet_ = -1;
+  id_base_station_check_to_send_ACK_ = -1;
   time_ = 0;
   channel_ = new Channel();
   type_information_ = type_information;
@@ -105,23 +108,9 @@ void WirelessNetwork::AddPacketToBaseStation(Package* package, int id_station)
   base_stations_[id_station]->AddPackage(package);
 }
 
-void WirelessNetwork::SendPacket(int id_base_station)
+void WirelessNetwork::SendPacket(int id_base_station,double time)
 {
-  if (type_information_ == 2)
-  {
-    if (type_print_ == 1)
-    {
-      cerr << "The packet was sent from the base station with id: " <<  id_base_station << endl;
-    }
-    else
-    {
-      ofstream save("debug.txt", ios_base::app);
-      save << "The packet was sent from the base station with id: " << id_base_station << endl;
-      save.close();
-    }
-  }
-  channel_->AddPackageToChannel(base_stations_[id_base_station]->SendPackage());
-
+  channel_->AddPackageToChannel(base_stations_[id_base_station]->SendPackage(time));
 }
 
 void WirelessNetwork::AddToRetransmission(Package* packet, int id)
@@ -307,5 +296,159 @@ void WirelessNetwork::SetCheckACK(bool can_you_check_ack)
 {
   can_you_check_ack_ = can_you_check_ack;
 }
+
+void WirelessNetwork::SetBaseStationSendPacket(int id)
+{
+  id_base_station_send_packet_ = id;
+}
+
+int WirelessNetwork::GetBaseStationSendPacket()
+{
+  return id_base_station_send_packet_;
+}
+
+double WirelessNetwork::UniformGenerator(int& seed,bool uniform,int id)
+{
+  int h = seed / kQ;
+  seed = kA * (seed - kQ*h) - kR*h;
+  if (seed < 0)seed = seed + static_cast<int>(kM);
+  if (uniform == true)
+  {
+    if (id > -1)
+    {
+      this->SetSeedNormalToBaseStation(seed, id);
+    }
+    else
+    {
+      this->SetSeedInChannel(seed);
+    }
+  }
+  else
+  {
+    this->SetSeedExpToBaseStation(seed, id);
+  }
+  return seed / kM;
+}
+
+double WirelessNetwork::UniformGeneratorIntercal(int maks, int min, int& seed,int id)
+{
+  return UniformGenerator(seed,true,id)*(maks-min)+min;
+}
+
+double WirelessNetwork::ExponentialGenerator(int lambda, int& seed,int id)
+{
+  return -(1.0/lambda)*log(UniformGenerator(seed,false,id));
+}
+
+int WirelessNetwork::ZeroOneGenerator(double p, int& seed)
+{
+  if (UniformGenerator(seed,true,-1) < p)return 1;
+  else return 0;
+}
+
+void WirelessNetwork::SetSeedNormalToBaseStation(int seed, int id)
+{
+  base_stations_[id]->SetSeedNormal(seed);
+}
+
+void WirelessNetwork::SetSeedExpToBaseStation(int seed, int id)
+{
+  base_stations_[id]->SetSeedExp(seed);
+}
+
+int& WirelessNetwork::GetSeedNormalFromBaseStation(int id)
+{
+  return base_stations_[id]->GetSeedNormal();
+}
+
+int& WirelessNetwork::GetSeedExpFromBaseStation(int id)
+{
+  return base_stations_[id]->GetSeedExp();
+}
+
+void WirelessNetwork::SetSeedInChannel(int seed)
+{
+  channel_->SetSeed(seed);
+}
+
+int& WirelessNetwork::GetSeedFromChannel()
+{
+  return channel_->GetSeed();
+}
+
+void WirelessNetwork::SaveIdToCheckToSendACK(int id)
+{
+  id_base_station_check_to_send_ACK_ = id;
+}
+
+int WirelessNetwork::GetIdToCheckToSendACK()
+{
+  return id_base_station_check_to_send_ACK_;
+}
+
+void WirelessNetwork::IncrementErrorRateBaseStation(int id)
+{
+  base_stations_[id]->AddError();
+}
+
+void WirelessNetwork::IncrementPackageErrorRateBaseStation(int id)
+{
+  base_stations_[id]->AddPackageError();
+}
+
+void WirelessNetwork::IncrementNumberOfPacket()
+{
+  number_of_packets_correctly_received_++;
+}
+
+void WirelessNetwork::IncrementSumOfRetransmission(int amount)
+{
+  sum_of_retransmissions_ += amount;
+}
+
+void WirelessNetwork::SaveTimeReceivingStation(double time, int id)
+{
+  receiving_station_[id]->SaveTime(time);
+}
+
+void WirelessNetwork::AddAverageDelayBuffor(double time)
+{
+  average_delay_of_the_packet_buffor_ += time;
+}
+
+void WirelessNetwork::AddAverageDelayChannel(double time)
+{ 
+  average_delay_of_the_packet_channel_ += time;
+}
+
+void WirelessNetwork::PrintStatistic()
+{
+  double temp=0.0;
+  double temp2=0.0;
+  int id_maks_error_ = base_stations_[0]->GetErrorRate();
+  cerr << "Srednia pakietowa stopa bledow (usredniona po K odbiornikach): " << endl;
+  for (int i = 0; i < base_stations_.size(); i++)
+  {
+
+    temp += base_stations_[i]->GetErrorRate();
+    if (id_maks_error_ < temp)id_maks_error_ = i;
+    temp2 += base_stations_[i]->GetPackageError();
+  }
+  cerr << (temp/ temp2)*100.00 <<"%"<< endl;
+  cerr << "maksymalna pakietowa stopa bledow" << endl;
+  temp = base_stations_[id_maks_error_]->GetErrorRate();
+  temp2 = base_stations_[id_maks_error_]->GetPackageError();
+  cerr << ( temp/ temp2) * 100.00<<"%" << endl;
+  cerr << "srednia liczba retransmisji pakietow" << endl;
+  cerr << double(sum_of_retransmissions_ / number_of_packets_correctly_received_) << endl;
+  cerr << "Przeplywnosc systemu:" << endl;
+  cerr << number_of_packets_correctly_received_ / time_ << endl;
+  cerr << "Srednie opoznienie(bufor - odebranie)" << endl;
+  cerr << average_delay_of_the_packet_channel_ / number_of_packets_correctly_received_ << endl;
+  cerr << "Sredni czas oczekiwania(bufor - opuszczenie) " << endl;
+  cerr << average_delay_of_the_packet_buffor_ / number_of_packets_correctly_received_ << endl;
+}
+
+
 
 

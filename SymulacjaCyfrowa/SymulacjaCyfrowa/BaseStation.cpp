@@ -12,10 +12,11 @@ void BaseStation::AddPackage(Package* package)
 	package_.push(package);
 }
 
-Package* BaseStation::SendPackage()
+Package* BaseStation::SendPackage(double time)
 {
 	Package* package=package_.front();
 	package_.pop();
+	package->ExitBuffor(time);
 	return package;
 }
 
@@ -39,4 +40,45 @@ bool BaseStation::CheckACK()
 int BaseStation::GetFirtPackageID()
 {
 	return package_.front()->GetId();
+}
+
+void BaseStation::SetSeedExp(int seed)
+{
+	seed_exp_ = seed;
+}
+
+void BaseStation::SetSeedNormal(int seed)
+{
+	seed_normal_ = seed;
+}
+
+int& BaseStation::GetSeedExp()
+{
+	return seed_exp_;
+}
+
+int& BaseStation::GetSeedNormal()
+{
+	return seed_normal_;
+}
+
+void BaseStation::AddError()
+{
+	error_rate_++;
+	all_package_++;
+}
+
+void BaseStation::AddPackageError()
+{
+	all_package_++;
+}
+
+int BaseStation::GetErrorRate()
+{
+	return error_rate_;
+}
+
+int BaseStation::GetPackageError()
+{
+	return all_package_;
 }
