@@ -4,7 +4,9 @@ using namespace std;
 #include "TimeEventList.h"
 #include "TimeEvent.h"
 #include "PackageGeneration.h"
-#include "ConditionalEvent.h"
+#include "CheckACK.h"
+#include "EndOfPacketTransmission.h"
+#include "FinishSendACK.h"
 
 int main()
 {
@@ -195,183 +197,167 @@ int main()
   cerr << "Enter the time of the initial phase after which the statistics should be reset" << endl;
   cin >> time_initial_phase;
   //---------------------inicjalizacja systemu : wygenerowanie pierwszych zdarzeń, przypisanie wylosowanych seedów
-  double time = 0;
-  for (int i = 0; i < wireless_network->GetNumberOfStations(); i++)
-  {
-    wireless_network->SetSeedNormalToBaseStation(normal[0], i);
-    normal.erase(normal.begin());
-    wireless_network->SetSeedExpToBaseStation(exponential[0], i);
-    exponential.erase(exponential.begin());
-    time = wireless_network->ExponentialGenerator(5,wireless_network->GetSeedExpFromBaseStation(i),i);
-    generate = new PackageGeneration(time, wireless_network, i, time_event);
-    time_event->AddNewEvent(generate);
-  }
-  wireless_network->SetSeedInChannel(zero_one[0]);
-  zero_one.erase(zero_one.begin());
 
-  
-  cerr << "Select the end simulation condition" << endl;
-  cerr << "1. Time " << endl;
-  cerr << "2. Number of correctly delivered packages" << endl;
-
-
-  // pętla symulacyjna
-  while ((wireless_network->GetTime() < condition_of_finish_time) && (wireless_network->GetNumberCorrectlySentPacket() < condition_of_finish_packages))
-  {
-    if (type_information != 3) {
-      if (type_print == 1)
-      {
-        cerr <<"..............................................." << endl;
-      }
-      else
-      {
-        ofstream save("debug.txt", ios_base::app);
-        save << "..............................................." << endl;
-        save.close();
-      }
-      //time_event->PrintList();
-      if (type_print == 1)
-      {
-        cerr << "..............................................."<< endl;
-      }
-      else
-      {
-        ofstream save("debug.txt", ios_base::app);
-        save << "..............................................." << endl;
-        save.close();
-      }
-    }
-    if (time_initial_phase < wireless_network->GetTime() && condition == true)
+    double time = 0;
+    for (int i = 0; i < wireless_network->GetNumberOfStations(); i++)
     {
-      condition = false;
-      wireless_network->ResetStatistic();
+      wireless_network->SetSeedNormalToBaseStation(normal[0], i);
+      normal.erase(normal.begin());
+      wireless_network->SetSeedExpToBaseStation(exponential[0], i);
+      exponential.erase(exponential.begin());
+      time = wireless_network->ExponentialGenerator(5, wireless_network->GetSeedExpFromBaseStation(i), i);
+      generate = new PackageGeneration(time, wireless_network, i, time_event);
+      time_event->AddNewEvent(generate);
     }
+    wireless_network->SetSeedInChannel(zero_one[0]);
+    zero_one.erase(zero_one.begin());
 
-
-    if (step_mode == 1) cin.get();
-    else;
-    generate = time_event->GetFirst();
-    wireless_network->SetTime(generate->GetTime());
-    generate->Execute();
-    delete generate;
-   // conditional_event->SetTime(wireless_network->GetTime());
-
-
-    if (type_information != 3) {
-      if (type_print == 1)
-      {
-        cerr << "================check conditional event================" << endl;
-      }
-      else
-      {
-        ofstream save("debug.txt", ios_base::app);
-        save << "================check conditional event================" << endl;
-        save.close();
-      }
-    }
-
-    if (wireless_network->GetBaseStationSendPacket() != -1) // sprawdzanie czy jakaś stacja bazowa ma wysłać swój pakiet
+    // pętla symulacyjna
+    while ((wireless_network->GetTime() < condition_of_finish_time) && (wireless_network->GetNumberCorrectlySentPacket() < condition_of_finish_packages))
     {
-      temp_int = wireless_network->CheckIdFromBaseStation(wireless_network->GetBaseStationSendPacket());
-      wireless_network->SendPacket(wireless_network->GetBaseStationSendPacket(),wireless_network->GetTime());
-      if (type_information == 2)
-      {
+      if (type_information != 3) {
         if (type_print == 1)
         {
-          cerr << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << " id package: " << temp_int  << endl;
-          cerr << "Scheduling the packet transmission end event and checking ACK messages" << endl;
+          cerr << "..............................................." << endl;
         }
         else
         {
           ofstream save("debug.txt", ios_base::app);
-          save << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << " id package: " << temp_int << endl;
-          save << "Scheduling the packet transmission end event and checking ACK messages" << endl;
+          save << "..............................................." << endl;
+          save.close();
+        }
+        //time_event->PrintList();
+        if (type_print == 1)
+        {
+          cerr << "..............................................." << endl;
+        }
+        else
+        {
+          ofstream save("debug.txt", ios_base::app);
+          save << "..............................................." << endl;
           save.close();
         }
       }
-      wireless_network->DeleteCheckingStation(wireless_network->GetBaseStationSendPacket());
-
-      temp_time = wireless_network->UniformGeneratorIntercal(10,1, wireless_network->GetSeedNormalFromBaseStation(wireless_network->GetBaseStationSendPacket()), wireless_network->GetBaseStationSendPacket());
-      generate = new EndOfPacketTransmission(temp_time+wireless_network->GetTime(), wireless_network, wireless_network->GetBaseStationSendPacket());
-      time_event->AddNewEvent(generate);
-      generate = new CheckACK(temp_time + 1+wireless_network->GetTime(), wireless_network, wireless_network->GetBaseStationSendPacket());
-      time_event->AddNewEvent(generate);
-      wireless_network->SetBaseStationSendPacket(-1);
-    }
-
-    if ((wireless_network->CheckBaseStationTer() != -1) && (wireless_network->GetCheckACK() == true)) // zdarzenie warunkowe wystąpienia błędu TER
-    {
-      wireless_network->SetCheckACK(false);
-      int temp_ = wireless_network->CheckBaseStationTer();
-      if (wireless_network->CheckTerError(wireless_network->CheckBaseStationTer()))
+      if (time_initial_phase < wireless_network->GetTime() && condition == true)
       {
-        if (wireless_network->GetTypeInfo() != 3)
+        condition = false;
+        wireless_network->ResetStatistic();
+      }
+
+
+      if (step_mode == 1) cin.get();
+      else;
+      generate = time_event->GetFirst();
+      wireless_network->SetTime(generate->GetTime());
+      generate->Execute();
+      delete generate;
+      // conditional_event->SetTime(wireless_network->GetTime());
+
+
+      if (type_information != 3) {
+        if (type_print == 1)
         {
-          if (wireless_network->GetTypePrint() != 2)
-            cerr << "package correctly delivered" << endl;
+          cerr << "================check conditional event================" << endl;
+        }
+        else
+        {
+          ofstream save("debug.txt", ios_base::app);
+          save << "================check conditional event================" << endl;
+          save.close();
         }
       }
-      else
+
+      if (wireless_network->GetBaseStationSendPacket() != -1) // sprawdzanie czy jakaś stacja bazowa ma wysłać swój pakiet
+      {
+        temp_int = wireless_network->CheckIdFromBaseStation(wireless_network->GetBaseStationSendPacket());
+        wireless_network->SendPacket(wireless_network->GetBaseStationSendPacket(), wireless_network->GetTime());
+        if (type_information == 2)
+        {
+          if (type_print == 1)
+          {
+            cerr << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << " id package: " << temp_int << endl;
+            cerr << "Scheduling the packet transmission end event and checking ACK messages" << endl;
+          }
+          else
+          {
+            ofstream save("debug.txt", ios_base::app);
+            save << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << " id package: " << temp_int << endl;
+            save << "Scheduling the packet transmission end event and checking ACK messages" << endl;
+            save.close();
+          }
+        }
+        wireless_network->DeleteCheckingStation(wireless_network->GetBaseStationSendPacket());
+
+        temp_time = wireless_network->UniformGeneratorIntercal(10, 1, wireless_network->GetSeedNormalFromBaseStation(wireless_network->GetBaseStationSendPacket()), wireless_network->GetBaseStationSendPacket());
+        generate = new EndOfPacketTransmission(temp_time + wireless_network->GetTime(), wireless_network, wireless_network->GetBaseStationSendPacket());
+        time_event->AddNewEvent(generate);
+        generate = new CheckACK(temp_time + 1 + wireless_network->GetTime(), wireless_network, wireless_network->GetBaseStationSendPacket());
+        time_event->AddNewEvent(generate);
+        wireless_network->SetBaseStationSendPacket(-1);
+      }
+
+      if ((wireless_network->CheckBaseStationTer() != -1)) // zdarzenie warunkowe wystąpienia błędu TER
       {
         Package* temp_ = wireless_network->GetPackageToTer(wireless_network->CheckBaseStationTer());
         if (temp_->GetLR() < wireless_network->GetNumberOfMaxRetrasmission())
         {
           temp_->IncrementLR();
           wireless_network->AddToRetransmission(temp_, temp_->GetIdStation());
+          wireless_network->SaveBaseStationTer(-1);
         }
         else delete temp_;
+
       }
-    }
-    if(wireless_network->GetIdToCheckToSendACK()>-1) // sprawdzene czy pakiet został poprawnie przesłany przez kanał
-    { 
-    if (wireless_network->ZeroOneGenerator(0.9, wireless_network->GetSeedFromChannel())) // pakiet poprawnie dostarczony wyślij wiadomośc ACK
-    {
-      wireless_network->SendACK(wireless_network->GetIdToCheckToSendACK());// przekazuje id do zdarzenia warunkowego wysłania wiadomości ack
-      if (type_information == 2)
+      if (wireless_network->GetIdToCheckToSendACK() > -1) // sprawdzene czy pakiet został poprawnie przesłany przez kanał
       {
+        if (wireless_network->ZeroOneGenerator(0.9, wireless_network->GetSeedFromChannel())) // pakiet poprawnie dostarczony wyślij wiadomośc ACK
+        {
+          wireless_network->SendACK(wireless_network->GetIdToCheckToSendACK());// przekazuje id do zdarzenia warunkowego wysłania wiadomości ack
+          if (type_information == 2)
+          {
+            if (type_print == 1)
+            {
+              cerr << "Start sending an ack message by the station with id" << wireless_network->GetIdToCheckToSendACK() << endl;
+            }
+            else
+            {
+              ofstream save("debug.txt", ios_base::app);
+              save << "Start sending an ack message by the station with id" << wireless_network->GetIdToCheckToSendACK() << endl;
+              save.close();
+            }
+          }
+          wireless_network->SaveTimeReceivingStation(wireless_network->GetTime(), wireless_network->GetIdToCheckToSendACK());
+          wireless_network->IncrementPackageErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
+          wireless_network->SetAckOnChannel();
+          generate = new FinishSendACK(wireless_network->GetTime() + 1, wireless_network, wireless_network->GetIdToCheckToSendACK());
+          wireless_network->SaveIdToCheckToSendACK(-1);
+          time_event->AddNewEvent(generate);
+        }
+        else// pakiet nie został poprawnie dostarczony brak wysłania wiadomości ACK
+        {
+          wireless_network->IncrementErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
+        }
+      }
+
+
+      if (wireless_network->GetColission())
+      {
+        wireless_network->SendToRetransmission();
+      }
+
+      if (type_information != 3) {
         if (type_print == 1)
         {
-          cerr << "Start sending an ack message by the station with id" << wireless_network->GetIdToCheckToSendACK() << endl;
+          cerr << "=======================================================" << endl;
         }
         else
         {
           ofstream save("debug.txt", ios_base::app);
-          save << "Start sending an ack message by the station with id" << wireless_network->GetIdToCheckToSendACK() << endl;
+          save << "========================================================" << endl;
           save.close();
         }
       }
-      wireless_network->SaveTimeReceivingStation(wireless_network->GetTime(), wireless_network->GetIdToCheckToSendACK());
-      wireless_network->IncrementPackageErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
-      wireless_network->SetAckOnChannel();
-      generate = new FinishSendACK(wireless_network->GetTime() + 1, wireless_network, wireless_network->GetIdToCheckToSendACK());
-      wireless_network->SaveIdToCheckToSendACK(-1);
-      time_event->AddNewEvent(generate);
-    }
-    else// pakiet nie został poprawnie dostarczony brak wysłania wiadomości ACK
-    {
-      wireless_network->IncrementErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
-    }
-    }
-    
-
-    if (wireless_network->GetColission())
-    {
-      wireless_network->SendToRetransmission();
     }
 
-      if (type_information != 3) {
-      if (type_print == 1)
-      {
-        cerr << "=======================================================" << endl;
-      }
-      else
-      {
-        ofstream save("debug.txt", ios_base::app);
-        save << "========================================================" << endl;
-        save.close();
-      }
-    }
-  }
-
-  wireless_network->PrintStatistic();
+    wireless_network->PrintStatistic();
 }

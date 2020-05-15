@@ -5,7 +5,8 @@
 using namespace std;
 #include <iostream>
 #include "WirelessNetwork.h"
-#include "ConditionalEvent.h"
+#include "TimeEventList.h"
+
 class CheckingChannel :public TimeEvent
 {
 public:
@@ -20,7 +21,6 @@ private:
 	double time_;
 	Channel* channel_;
 	WirelessNetwork* network_;
-	ConditionalEvent* conditional_;
 	int id_base_station_;
 	TimeEventList* list_;
 };

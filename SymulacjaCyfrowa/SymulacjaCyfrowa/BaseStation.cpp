@@ -15,10 +15,20 @@ void BaseStation::AddPackage(Package* package)
 
 Package* BaseStation::SendPackage(double time)
 {
-	Package* package=package_.front();
-	package_.pop();
-	package->ExitBuffor(time);
-	return package;
+	Package* package;
+	if (package_to_retransmission_ == nullptr)
+	{
+		package = package_.front();
+		package_.pop();
+		package->ExitBuffor(time);
+		return package;
+	}
+	else
+	{
+		package = package_to_retransmission_;
+		package_to_retransmission_ = nullptr;
+		return package;
+	}
 }
 
 void BaseStation::Retransmition(Package* package)

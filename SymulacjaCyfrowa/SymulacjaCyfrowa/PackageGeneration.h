@@ -5,7 +5,6 @@
 #include "Package.h"
 #include "WirelessNetwork.h"
 #include "TimeEventList.h"
-#include "ConditionalEvent.h"
 #include "CheckingChannel.h"
 
 

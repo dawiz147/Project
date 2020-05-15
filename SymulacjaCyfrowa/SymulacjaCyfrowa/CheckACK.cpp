@@ -42,9 +42,8 @@ void CheckACK::Execute()
 
       }
     }
-    cin.get();
-    cerr << id_ << endl;
-    network_->SetIdTerError(id_);
+
+    network_->SaveBaseStationTer(id_);
   }
 }
 

@@ -15,7 +15,7 @@ class WirelessNetwork
 {
 public:
 	WirelessNetwork(int type_information, int type_print, int step_mode);						//WirelessNetwork class constructor 
-	~WirelessNetwork() = default;						//WirelessNetwork class destroyer
+	~WirelessNetwork();						//WirelessNetwork class destroyer
 	void PrintInfoAboutSystem();
 	Channel* GetChannel();
 	int GetNumberOfMaxRetrasmission();
@@ -96,8 +96,8 @@ private:
 	Package* temp_package_;
 	int id_base_station_send_packet_; //Zmienna u¿ywana do wykonania zdarzenia warunkowego wys³ania pakietu ze stacji (zmienna przechowuje id stacji bazowej (-1 == nie ma stacji która chce wys³aæ pakiet))
 	int id_base_station_check_to_send_ACK_;
-	int number_of_packets_correctly_received_;
-	int sum_of_retransmissions_;
+	double number_of_packets_correctly_received_;
+	double sum_of_retransmissions_;
 	double average_delay_of_the_packet_buffor_=0;
 	double average_delay_of_the_packet_channel_=0;
 	const double kM = 2147483647.0;

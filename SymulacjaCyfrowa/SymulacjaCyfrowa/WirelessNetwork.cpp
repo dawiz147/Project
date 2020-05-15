@@ -26,6 +26,13 @@ WirelessNetwork::WirelessNetwork(int type_information, int type_print, int step_
   this->PrintInfoAboutSystem();
 }
 
+WirelessNetwork::~WirelessNetwork()
+{
+  delete temp_package_;
+  delete channel_;
+  cerr << "usuwanko" << endl;
+}
+
 void WirelessNetwork::PrintInfoAboutSystem()
 {
   if (type_information_ == 1)
