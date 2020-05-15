@@ -69,11 +69,13 @@ public:
 	void IncrementErrorRateBaseStation(int id);
 	void IncrementPackageErrorRateBaseStation(int id);
 	void IncrementNumberOfPacket();
+	int GetNumberCorrectlySentPacket();
 	void IncrementSumOfRetransmission(int amount);
 	void SaveTimeReceivingStation(double time, int id);
 	void AddAverageDelayBuffor(double time);
 	void AddAverageDelayChannel(double time);
 	void PrintStatistic();
+	void ResetStatistic();
 private:
 	vector<BaseStation*> base_stations_;				//A vector that stores pointers to each broadcasting station
 	double time_;										//A variable that specifies the overall system time

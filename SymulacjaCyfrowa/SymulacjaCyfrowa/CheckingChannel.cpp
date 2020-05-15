@@ -26,7 +26,7 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 raz, fals
       }
       else
       {
-        event = new CheckingChannel(time_ + 0.5, network_, id_base_station_, conditional_, counter_, list_);
+        event = new CheckingChannel(time_ + 0.5, network_, id_base_station_, counter_, list_);
         list_->AddNewEvent(event);
       }
     }
@@ -46,7 +46,7 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 raz, fals
         }
       }
       counter_=0;
-      event = new CheckingChannel(time_ + 0.5, network_, id_base_station_, conditional_, counter_, list_);
+      event = new CheckingChannel(time_ + 0.5, network_, id_base_station_, counter_, list_);
       list_->AddNewEvent(event);
     }
    
@@ -73,12 +73,11 @@ double CheckingChannel::GetTime()
 {
   return time_;
 }
-CheckingChannel::CheckingChannel(double time, WirelessNetwork* network, int id_base_station,ConditionalEvent* conditional,int counter, TimeEventList* list)
+CheckingChannel::CheckingChannel(double time, WirelessNetwork* network, int id_base_station,int counter, TimeEventList* list)
 {
   time_ = time;
   network_ = network;
   channel_ = network_->GetChannel();
-  conditional_ = conditional;
   id_base_station_=id_base_station;
   counter_ = counter;
   list_ = list;

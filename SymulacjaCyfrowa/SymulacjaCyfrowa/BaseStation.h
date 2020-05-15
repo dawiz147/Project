@@ -24,6 +24,7 @@ public:
 	void AddPackageError();
 	int GetErrorRate();
 	int GetPackageError();
+	void ResetStatistic();
 
 private:
 	queue <Package*> package_;		//A queue that will store packets to be sent through the channel

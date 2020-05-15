@@ -42,7 +42,7 @@ int main()
   //----------------------------------inicjalizacja systemu-------------------------------------
   WirelessNetwork* wireless_network = new WirelessNetwork(type_information, type_print, step_mode);
   TimeEventList* time_event = new TimeEventList();
-  ConditionalEvent* conditional_event = new ConditionalEvent(wireless_network, time_event);
+  //ConditionalEvent* conditional_event = new ConditionalEvent(wireless_network, time_event);
   TimeEvent* generate;
   //----------------------------------Tworzenie wykresów generatorów------------------------------------------
   int create_file;
@@ -165,7 +165,35 @@ int main()
     save << i << " : " << zero_one[i] << endl;
     save.close();
   }
+  //------------------------------wybor warunka koncowego zakonczenia symulacji------------------------
+  int end_simulation_condition;
+  double condition_of_finish_time;
+  int condition_of_finish_packages;
+  cerr << "Select the end simulation condition" << endl;
+  cerr << "1. Time " << endl;
+  cerr << "2. Number of correctly delivered packages" << endl;
+  cerr << "Choose a number: "; cin >> end_simulation_condition;
+  while (!((end_simulation_condition < 3) && (end_simulation_condition > 0)))
+  {
+    cerr << "Wrong value selected!! Choose a number(1-3): "; cin >> end_simulation_condition;
+  }
+  if (end_simulation_condition == 1)
+  {
 
+    cerr << "Enter the end time of the simulation: "; cin >> condition_of_finish_time;
+    condition_of_finish_packages=INT_MAX;
+
+  }
+  else
+  {
+    cerr << "Enter the number of packets sent correctly when the simulation is to end : "; cin >> condition_of_finish_packages;
+    condition_of_finish_time = INT_MAX;
+  }
+
+  bool condition = true;
+  double time_initial_phase;
+  cerr << "Enter the time of the initial phase after which the statistics should be reset" << endl;
+  cin >> time_initial_phase;
   //---------------------inicjalizacja systemu : wygenerowanie pierwszych zdarzeń, przypisanie wylosowanych seedów
   double time = 0;
   for (int i = 0; i < wireless_network->GetNumberOfStations(); i++)
@@ -175,16 +203,20 @@ int main()
     wireless_network->SetSeedExpToBaseStation(exponential[0], i);
     exponential.erase(exponential.begin());
     time = wireless_network->ExponentialGenerator(5,wireless_network->GetSeedExpFromBaseStation(i),i);
-    generate = new PackageGeneration(time, wireless_network, i, time_event, conditional_event);
+    generate = new PackageGeneration(time, wireless_network, i, time_event);
     time_event->AddNewEvent(generate);
   }
   wireless_network->SetSeedInChannel(zero_one[0]);
   zero_one.erase(zero_one.begin());
 
-  double condition_of_finish;
-  cerr << "Select the end time of the simulation "; cin >> condition_of_finish;
+  
+  cerr << "Select the end simulation condition" << endl;
+  cerr << "1. Time " << endl;
+  cerr << "2. Number of correctly delivered packages" << endl;
+
+
   // pętla symulacyjna
-  while (wireless_network->GetTime()< condition_of_finish)
+  while ((wireless_network->GetTime() < condition_of_finish_time) && (wireless_network->GetNumberCorrectlySentPacket() < condition_of_finish_packages))
   {
     if (type_information != 3) {
       if (type_print == 1)
@@ -197,7 +229,7 @@ int main()
         save << "..............................................." << endl;
         save.close();
       }
-      time_event->PrintList();
+      //time_event->PrintList();
       if (type_print == 1)
       {
         cerr << "..............................................."<< endl;
@@ -209,7 +241,11 @@ int main()
         save.close();
       }
     }
-
+    if (time_initial_phase < wireless_network->GetTime() && condition == true)
+    {
+      condition = false;
+      wireless_network->ResetStatistic();
+    }
 
 
     if (step_mode == 1) cin.get();
@@ -217,7 +253,8 @@ int main()
     generate = time_event->GetFirst();
     wireless_network->SetTime(generate->GetTime());
     generate->Execute();
-    conditional_event->SetTime(wireless_network->GetTime());
+    delete generate;
+   // conditional_event->SetTime(wireless_network->GetTime());
 
 
     if (type_information != 3) {
@@ -335,5 +372,6 @@ int main()
       }
     }
   }
+
   wireless_network->PrintStatistic();
 }

@@ -92,19 +92,6 @@ void WirelessNetwork::AddPacketToReceivingStation(Package* package, int id_stati
 
 void WirelessNetwork::AddPacketToBaseStation(Package* package, int id_station)
 {
-  if (type_information_ == 2)
-  {
-    if (type_print_ == 1)
-    {
-      cerr << "End of packet transmission id: " << package->GetId() << " The packet was sent from the base station with id: " << id_station << endl;
-    }
-    else
-    {
-      ofstream save("debug.txt", ios_base::app);
-      save << "End of packet transmission id: " << package->GetId() << " The packet was sent from the base station with id: " << id_station << endl;
-      save.close();
-    }
-  }
   base_stations_[id_station]->AddPackage(package);
 }
 
@@ -401,6 +388,11 @@ void WirelessNetwork::IncrementNumberOfPacket()
   number_of_packets_correctly_received_++;
 }
 
+int WirelessNetwork::GetNumberCorrectlySentPacket()
+{
+  return number_of_packets_correctly_received_;
+}
+
 void WirelessNetwork::IncrementSumOfRetransmission(int amount)
 {
   sum_of_retransmissions_ += amount;
@@ -447,6 +439,18 @@ void WirelessNetwork::PrintStatistic()
   cerr << average_delay_of_the_packet_channel_ / number_of_packets_correctly_received_ << endl;
   cerr << "Sredni czas oczekiwania(bufor - opuszczenie) " << endl;
   cerr << average_delay_of_the_packet_buffor_ / number_of_packets_correctly_received_ << endl;
+}
+
+void WirelessNetwork::ResetStatistic()
+{
+  for (int i = 0; i < base_stations_.size(); i++)
+  {
+    base_stations_[i]->ResetStatistic();
+  }
+  sum_of_retransmissions_ = 0;
+  number_of_packets_correctly_received_ = 0;
+  average_delay_of_the_packet_channel_ = 0;
+  average_delay_of_the_packet_buffor_ = 0;
 }
 
 

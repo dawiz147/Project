@@ -4,12 +4,11 @@
 
 using namespace std;
 
-PackageGeneration::PackageGeneration(double time, WirelessNetwork* network,int id_base_station, TimeEventList* list, ConditionalEvent* conditional)
+PackageGeneration::PackageGeneration(double time, WirelessNetwork* network,int id_base_station, TimeEventList* list)
 {
 	time_ = time;
 	network_ = network;
 	id_base_station_ = id_base_station;
-	conditional_= conditional;
   list_ = list;
 }
 
@@ -37,7 +36,7 @@ void PackageGeneration::Execute()
   }
   time_temp=time_+ network_->ExponentialGenerator(5, network_->GetSeedExpFromBaseStation(id_base_station_), id_base_station_);
 	network_->AddPacketToBaseStation(package,id_base_station_);
-  TimeEvent* time_event = new PackageGeneration(time_temp, network_, id_base_station_, list_, conditional_);
+  TimeEvent* time_event = new PackageGeneration(time_temp, network_, id_base_station_, list_);
   list_->AddNewEvent(time_event);
   if (network_->CheckingStation(id_base_station_)) //sprawdzanie czy dana stacja nas³uchuje ju¿ kana³u w celu przes³ania pakietu
   {
@@ -47,7 +46,7 @@ void PackageGeneration::Execute()
   else
   {
     network_->AddBaseStationChecking(id_base_station_);
-    TimeEvent* event = new CheckingChannel(time_, network_, id_base_station_, conditional_, 0,list_);
+    TimeEvent* event = new CheckingChannel(time_, network_, id_base_station_, 0,list_);
     list_->AddNewEvent(event);
 
   }

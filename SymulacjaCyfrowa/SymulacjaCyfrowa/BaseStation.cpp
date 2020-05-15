@@ -5,6 +5,7 @@ BaseStation::BaseStation()
 	id_base_station_ = 0;
 	CGPk_ = 0;	
 	ACK_message_ = false;
+	error_rate_ = 0;
 }
 
 void BaseStation::AddPackage(Package* package)
@@ -81,4 +82,10 @@ int BaseStation::GetErrorRate()
 int BaseStation::GetPackageError()
 {
 	return all_package_;
+}
+
+void BaseStation::ResetStatistic()
+{
+	error_rate_ = 0;
+	all_package_ = 0;
 }

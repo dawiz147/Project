@@ -9,7 +9,7 @@ using namespace std;
 class CheckingChannel :public TimeEvent
 {
 public:
-	CheckingChannel(double time, WirelessNetwork* network, int id_base_station, ConditionalEvent* conditional, int counter, TimeEventList* list);
+	CheckingChannel(double time, WirelessNetwork* network, int id_base_station, int counter, TimeEventList* list);
 	void Execute();
 	void Print();
 	double GetTime();
@@ -18,7 +18,6 @@ private:
 	TimeEvent* next_;
 	const double KDifs = 2;
 	double time_;
-
 	Channel* channel_;
 	WirelessNetwork* network_;
 	ConditionalEvent* conditional_;

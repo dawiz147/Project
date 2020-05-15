@@ -39,8 +39,11 @@ void CheckACK::Execute()
       if (network_->GetTypePrint() != 2)
       {
         cerr << "package from base station id: " << id_ << " did not arrive correctly. error occurrence ter" << endl;
+
       }
     }
+    cin.get();
+    cerr << id_ << endl;
     network_->SetIdTerError(id_);
   }
 }
