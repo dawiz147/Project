@@ -205,7 +205,7 @@ int main()
       normal.erase(normal.begin());
       wireless_network->SetSeedExpToBaseStation(exponential[0], i);
       exponential.erase(exponential.begin());
-      time = wireless_network->ExponentialGenerator(5, wireless_network->GetSeedExpFromBaseStation(i), i);
+      time = wireless_network->ExponentialGenerator(0.04, wireless_network->GetSeedExpFromBaseStation(i), i);
       generate = new PackageGeneration(time, wireless_network, i, time_event);
       time_event->AddNewEvent(generate);
     }
@@ -226,7 +226,7 @@ int main()
           save << "..............................................." << endl;
           save.close();
         }
-        //time_event->PrintList();
+        time_event->PrintList();
         if (type_print == 1)
         {
           cerr << "..............................................." << endl;
@@ -249,6 +249,7 @@ int main()
       else;
       generate = time_event->GetFirst();
       wireless_network->SetTime(generate->GetTime());
+      //cerr << "Czas systemowy: " << wireless_network->GetTime() << endl;
       generate->Execute();
       delete generate;
       // conditional_event->SetTime(wireless_network->GetTime());
@@ -298,20 +299,39 @@ int main()
 
       if ((wireless_network->CheckBaseStationTer() != -1)) // zdarzenie warunkowe wystąpienia błędu TER
       {
+       // cerr << "check base station to ter:" << wireless_network->CheckBaseStationTer() << endl;
         Package* temp_ = wireless_network->GetPackageToTer(wireless_network->CheckBaseStationTer());
         if (temp_->GetLR() < wireless_network->GetNumberOfMaxRetrasmission())
         {
           temp_->IncrementLR();
+          //cerr << temp_->GetLR() << endl;
           wireless_network->AddToRetransmission(temp_, temp_->GetIdStation());
           wireless_network->SaveBaseStationTer(-1);
         }
-        else delete temp_;
+       
+        else
+        {
+          wireless_network->IncrementErrorRateBaseStation(temp_->GetIdStation());
+          wireless_network->SaveBaseStationTer(-1);
+          delete temp_;
+
+        }
 
       }
+      if (wireless_network->GetColission())
+      {
+       // cerr << "KOLIZAJAAAAA" << endl;
+        wireless_network->SendToRetransmission();
+        time_event->DeleteCheckACK();
+        time_event->DeleteEndTransmission();
+      }
+      //cerr << "id to ack send" << wireless_network->GetIdToCheckToSendACK() << endl;
       if (wireless_network->GetIdToCheckToSendACK() > -1) // sprawdzene czy pakiet został poprawnie przesłany przez kanał
       {
-        if (wireless_network->ZeroOneGenerator(0.9, wireless_network->GetSeedFromChannel())) // pakiet poprawnie dostarczony wyślij wiadomośc ACK
+        //cerr << "weszlo1" << endl;
+        if (wireless_network->ZeroOneGenerator(0.8, wireless_network->GetSeedFromChannel())) // pakiet poprawnie dostarczony wyślij wiadomośc ACK
         {
+         // cerr << "weszlo2" << endl;
           wireless_network->SendACK(wireless_network->GetIdToCheckToSendACK());// przekazuje id do zdarzenia warunkowego wysłania wiadomości ack
           if (type_information == 2)
           {
@@ -326,25 +346,27 @@ int main()
               save.close();
             }
           }
+         // cerr << "weszlo3" << endl;
           wireless_network->SaveTimeReceivingStation(wireless_network->GetTime(), wireless_network->GetIdToCheckToSendACK());
+         // cerr << "weszlo4" << endl;
           wireless_network->IncrementPackageErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
+          //cerr << "weszlo5" << endl;
           wireless_network->SetAckOnChannel();
+         // cerr << "weszlo6" << endl;
           generate = new FinishSendACK(wireless_network->GetTime() + 1, wireless_network, wireless_network->GetIdToCheckToSendACK());
+         // cerr << "weszlo7" << endl;
           wireless_network->SaveIdToCheckToSendACK(-1);
+          //cerr << "weszlo8" << endl;
           time_event->AddNewEvent(generate);
+         // cerr << "weszlo9" << endl;
         }
         else// pakiet nie został poprawnie dostarczony brak wysłania wiadomości ACK
         {
-          wireless_network->IncrementErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
+          //cerr << "weszlo122" << endl;
+          wireless_network->SaveIdToCheckToSendACK(-1);
+          //  wireless_network->IncrementErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
         }
       }
-
-
-      if (wireless_network->GetColission())
-      {
-        wireless_network->SendToRetransmission();
-      }
-
       if (type_information != 3) {
         if (type_print == 1)
         {
@@ -360,4 +382,5 @@ int main()
     }
 
     wireless_network->PrintStatistic();
+
 }

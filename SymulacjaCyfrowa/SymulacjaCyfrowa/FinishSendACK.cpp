@@ -43,3 +43,8 @@ double FinishSendACK::GetTime()
 {
   return time_;
 }
+
+int FinishSendACK::RetrunId()
+{
+  return 0;
+}

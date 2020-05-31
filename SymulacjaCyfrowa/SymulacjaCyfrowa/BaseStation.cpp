@@ -76,7 +76,7 @@ int& BaseStation::GetSeedNormal()
 void BaseStation::AddError()
 {
 	error_rate_++;
-	all_package_++;
+	//all_package_++;
 }
 
 void BaseStation::AddPackageError()
@@ -84,9 +84,13 @@ void BaseStation::AddPackageError()
 	all_package_++;
 }
 
-int BaseStation::GetErrorRate()
+double BaseStation::GetErrorRate()
 {
-	return error_rate_;
+	cerr << "-----" << endl;
+	cerr <<"error"<< error_rate_ << endl;
+	cerr << all_package_ << endl;
+	if (error_rate_ == 0)return 0;
+	else return error_rate_/ all_package_;
 }
 
 int BaseStation::GetPackageError()

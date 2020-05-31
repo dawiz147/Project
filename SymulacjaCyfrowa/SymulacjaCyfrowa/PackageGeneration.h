@@ -16,7 +16,7 @@ public:
 	double GetTime();
 	void Execute();
 	void Print();
-
+	int RetrunId();
 private:
 	double time_;
 	double time_temp;

@@ -21,6 +21,8 @@ public:
 	Package* GetPackageToRetransmison();
 	void SetSeed(int seed);
 	int& GetSeed();
+	void SetCollision();
+
 private:
 	vector<Package*> vector_package_;		//Pointer to the currently transmitted packet
 	int retrasmission_id_;			//Variable that specifies the number of retransmissions that the packet performs

@@ -22,7 +22,7 @@ public:
 	int& GetSeedNormal();
 	void AddError();
 	void AddPackageError();
-	int GetErrorRate();
+	double GetErrorRate();
 	int GetPackageError();
 	void ResetStatistic();
 
@@ -37,7 +37,7 @@ private:
 	bool temp_;
 	int seed_exp_;
 	int seed_normal_;
-	int error_rate_;
-	int all_package_;
+	double error_rate_;
+	double all_package_;
 };
 #endif

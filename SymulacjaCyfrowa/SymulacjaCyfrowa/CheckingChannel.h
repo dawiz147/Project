@@ -13,6 +13,7 @@ public:
 	CheckingChannel(double time, WirelessNetwork* network, int id_base_station, int counter, TimeEventList* list);
 	void Execute();
 	void Print();
+	int RetrunId();
 	double GetTime();
 private:
 	int counter_;

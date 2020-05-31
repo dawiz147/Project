@@ -16,10 +16,6 @@ bool Channel::GetInformationOnChannelUsage()
 void Channel::AddPackageToChannel(Package* package)
 {
 	vector_package_.push_back(package);
-	if (vector_package_.size() > 1)
-	{
-		colission_ = true;
-	}
 	free_ = false;
 }
 
@@ -69,6 +65,12 @@ Package* Channel::GetPackageToRetransmison()
 {
 	package_to_send_ = vector_package_[0];
 	vector_package_.erase(vector_package_.begin());
+	//cerr << "size " << vector_package_.size() << endl;
+	if (vector_package_.size() == 0)
+	{
+		colission_ = false;
+		free_ = true;
+	}
 	return package_to_send_;
 }
 
@@ -80,4 +82,9 @@ void Channel::SetSeed(int seed)
 int& Channel::GetSeed()
 {
 	return seed_;
+}
+
+void Channel::SetCollision()
+{
+	colission_ = true;
 }

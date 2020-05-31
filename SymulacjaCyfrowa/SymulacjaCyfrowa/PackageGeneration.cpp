@@ -34,7 +34,7 @@ void PackageGeneration::Execute()
       save.close();
     }
   }
-  time_temp=time_+ network_->ExponentialGenerator(5, network_->GetSeedExpFromBaseStation(id_base_station_), id_base_station_);
+  time_temp=time_+ network_->ExponentialGenerator(0.04, network_->GetSeedExpFromBaseStation(id_base_station_), id_base_station_);
 	network_->AddPacketToBaseStation(package,id_base_station_);
   TimeEvent* time_event = new PackageGeneration(time_temp, network_, id_base_station_, list_);
   list_->AddNewEvent(time_event);
@@ -65,4 +65,9 @@ void PackageGeneration::Print()
       save.close();
     }
   }
+}
+
+int PackageGeneration::RetrunId()
+{
+  return 0;
 }

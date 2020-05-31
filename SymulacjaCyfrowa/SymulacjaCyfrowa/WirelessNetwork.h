@@ -56,7 +56,7 @@ public:
 	int GetBaseStationSendPacket(); // pobieranie zmiennej do zdarzenia warunkowego wysy³ania pakietu
 	double UniformGenerator(int& seed, bool uniform, int id);
 	double UniformGeneratorIntercal(int maks, int min, int& seed,int id);
-	double ExponentialGenerator(int lambda,int& seed,int id);
+	double ExponentialGenerator(double lambda,int& seed,int id);
 	int ZeroOneGenerator(double p,int& seed);
 	void SetSeedNormalToBaseStation(int seed, int id);
 	void SetSeedExpToBaseStation(int seed, int id);

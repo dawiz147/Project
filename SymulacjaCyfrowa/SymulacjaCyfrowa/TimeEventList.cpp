@@ -71,6 +71,43 @@ void TimeEventList::DeleteTimeEvent(double time)
   delete temp_;
 }
 
+void TimeEventList::DeleteEndTransmission()
+{
+  temp_ = first_;
+  condition_ = true;
+  while (temp_ != last_)
+  {
+    if (temp_->RetrunId() == 2)
+    {
+      if (temp_ == first_)
+      {
+        first_ = temp_->next_;
+        temp_->next_->prev_ = nullptr;
+        temp_->next_ = nullptr;
+        delete temp_;
+        temp_ = first_;
+        condition_ = false;
+      }
+      else
+      {
+        temp_->prev_->next_ = temp_->next_;
+        temp_->next_->prev_ = temp_->prev_;
+      }
+    }
+    else condition_ = true;
+    if (condition_ == true) {
+      temp_ = temp_->next_;
+    }
+  }
+  if (temp_->RetrunId() == 2)
+  {
+    last_ = temp_->prev_;
+    temp_->prev_->next_ = nullptr;
+    temp_->prev_ = nullptr;
+    delete temp_;
+  }
+}
+
 TimeEvent* TimeEventList::GetFirst()
 {
   if (first_ != nullptr) {
@@ -79,5 +116,42 @@ TimeEvent* TimeEventList::GetFirst()
     temp_->next_ = nullptr;
     temp_->prev_ = nullptr;
     return temp_;
+  }
+}
+
+void TimeEventList::DeleteCheckACK()
+{
+  temp_ = first_;
+  condition_ = true;
+  while (temp_ != last_)
+  {
+    if (temp_->RetrunId() == 1)
+    {
+      if (temp_ == first_)
+      {
+        first_ = temp_->next_;
+        temp_->next_->prev_ = nullptr;
+        temp_->next_ = nullptr;
+        delete temp_;
+        temp_ = first_;
+        condition_ = false;
+      }
+      else
+      {
+        temp_->prev_->next_ = temp_->next_;
+        temp_->next_->prev_ = temp_->prev_;
+      }
+    }
+    else condition_ = true;
+    if (condition_ == true) {
+      temp_ = temp_->next_;
+    }
+  }
+  if (temp_->RetrunId() == 1)
+  {
+    last_ = temp_->prev_;
+    temp_->prev_->next_ = nullptr;
+    temp_->prev_ = nullptr;
+    delete temp_;
   }
 }

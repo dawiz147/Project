@@ -274,10 +274,27 @@ bool WirelessNetwork::GetColission()
 
 void WirelessNetwork::SendToRetransmission()
 {
-  for (unsigned i = 0; i < channel_->GetSize(); i++)
+  //cerr << "rozmiar kana³u w send to retransmission" << channel_->GetSize() << endl;
+  unsigned size = channel_->GetSize();
+  for (unsigned i = 0; i < size; i++)
   {
     temp_package_ = channel_->GetPackageToRetransmison();
-    this->AddToRetransmission(temp_package_, temp_package_->GetIdStation());
+    //cerr << temp_package_->GetId() << "R" << endl;
+    if (temp_package_->GetLR() < this->GetNumberOfMaxRetrasmission())
+    {
+      temp_package_->IncrementLR();
+    //  cerr << "ilosc retransmisji: "<<temp_package_->GetLR() << endl;
+      this->AddToRetransmission(temp_package_, temp_package_->GetIdStation());
+     // wireless_network->SaveBaseStationTer(-1);
+    }
+    else
+    {
+      //cerr << "increment errorRate: " << temp_package_->GetIdStation() << endl;
+      this->IncrementErrorRateBaseStation(temp_package_->GetIdStation());
+      delete temp_package_;
+
+    }
+   // this->AddToRetransmission(temp_package_, temp_package_->GetIdStation());
   }
 }
 
@@ -329,7 +346,7 @@ double WirelessNetwork::UniformGeneratorIntercal(int maks, int min, int& seed,in
   return UniformGenerator(seed,true,id)*(maks-min)+min;
 }
 
-double WirelessNetwork::ExponentialGenerator(int lambda, int& seed,int id)
+double WirelessNetwork::ExponentialGenerator(double lambda, int& seed,int id)
 {
   return -(1.0/lambda)*log(UniformGenerator(seed,false,id));
 }
@@ -424,20 +441,19 @@ void WirelessNetwork::PrintStatistic()
 {
   double temp=0.0;
   double temp2=0.0;
-  int id_maks_error_ = base_stations_[0]->GetErrorRate();
+  double id_maks_error_ = base_stations_[0]->GetErrorRate();
+ // cerr << "pakieciki: " << number_of_packets_correctly_received_ << endl;
   cerr << "Srednia pakietowa stopa bledow (usredniona po K odbiornikach): " << endl;
   for (int i = 0; i < base_stations_.size(); i++)
   {
 
     temp += base_stations_[i]->GetErrorRate();
-    if (id_maks_error_ < temp)id_maks_error_ = i;
-    temp2 += base_stations_[i]->GetPackageError();
+    if (id_maks_error_ < base_stations_[i]->GetErrorRate())id_maks_error_ = base_stations_[i]->GetErrorRate();
+    //temp2 += base_stations_[i]->GetPackageError();
   }
-  cerr << (temp/ temp2)*100.00 <<"%"<< endl;
+  cerr << (temp/ kNumberOfStations_) << endl;
   cerr << "maksymalna pakietowa stopa bledow" << endl;
-  temp = base_stations_[id_maks_error_]->GetErrorRate();
-  temp2 = base_stations_[id_maks_error_]->GetPackageError();
-  cerr << ( temp/ temp2) * 100.00<<"%" << endl;
+  cerr << id_maks_error_ << endl;
   cerr << "srednia liczba retransmisji pakietow" << endl;
   cerr << double(sum_of_retransmissions_ / number_of_packets_correctly_received_) << endl;
   cerr << "Przeplywnosc systemu:" << endl;

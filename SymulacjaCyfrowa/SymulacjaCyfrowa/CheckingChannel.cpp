@@ -45,9 +45,17 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 raz, fals
           save.close();
         }
       }
+      if (counter_ == 3)
+      {
+        network_->DeleteCheckingStation(id_base_station_);
+        network_->SetBaseStationSendPacket(id_base_station_); // przesy³a id do zdarzeñ warunkowych aby wys³aæ pakiet ze stacji
+      }
+      else
+      { 
       counter_=0;
       event = new CheckingChannel(time_ + 0.5, network_, id_base_station_, counter_, list_);
       list_->AddNewEvent(event);
+      }
     }
    
    
@@ -68,6 +76,10 @@ void CheckingChannel::Print()
       save.close();
     }
   }
+}
+int CheckingChannel::RetrunId()
+{
+  return 0;
 }
 double CheckingChannel::GetTime()
 {

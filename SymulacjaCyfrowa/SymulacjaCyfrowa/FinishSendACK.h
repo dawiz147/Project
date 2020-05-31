@@ -8,6 +8,7 @@ FinishSendACK(double time, WirelessNetwork* network,int id);
 void Execute();
 void Print();
 double GetTime();
+int RetrunId();
 private:
   WirelessNetwork* network_;
   double time_;

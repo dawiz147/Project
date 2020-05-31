@@ -10,7 +10,9 @@ EndOfPacketTransmission(double time, WirelessNetwork* wireless, int id_base);
 void Execute();
 void Print();
 double GetTime();
+int RetrunId();
 private:
+  int id_event_=2;
   double time_;
   Channel* channel;
   int id_base_station_;
