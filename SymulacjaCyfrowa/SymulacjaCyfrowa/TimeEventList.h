@@ -8,6 +8,7 @@ class TimeEventList
 {
 public:
   TimeEventList();
+  ~TimeEventList();
   void AddNewEvent(TimeEvent* event);
   //TimeEvent* GetFirstEvent();
   void PrintList();

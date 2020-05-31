@@ -3,6 +3,17 @@ TimeEventList::TimeEventList()
 {
   first_ = last_ = nullptr;
 }
+TimeEventList::~TimeEventList()
+{
+  while (first_ != last_)
+  {
+    temp_ = first_;
+    first_ = first_->next_;
+    delete temp_;
+  }
+  delete first_;
+  first_ = last_ = temp_ = nullptr;
+}
 void TimeEventList::AddNewEvent(TimeEvent* event)
 {
   if (first_ == nullptr) // je¿eli jest to pierwszy time event dodaj go na poczatek listy

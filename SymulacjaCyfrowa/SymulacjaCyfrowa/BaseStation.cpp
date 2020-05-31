@@ -86,9 +86,7 @@ void BaseStation::AddPackageError()
 
 double BaseStation::GetErrorRate()
 {
-	cerr << "-----" << endl;
-	cerr <<"error"<< error_rate_ << endl;
-	cerr << all_package_ << endl;
+
 	if (error_rate_ == 0)return 0;
 	else return error_rate_/ all_package_;
 }

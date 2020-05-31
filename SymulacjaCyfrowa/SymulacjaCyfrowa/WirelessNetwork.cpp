@@ -28,9 +28,9 @@ WirelessNetwork::WirelessNetwork(int type_information, int type_print, int step_
 
 WirelessNetwork::~WirelessNetwork()
 {
-  delete temp_package_;
+  base_stations_.clear();
+  receiving_station_.clear();
   delete channel_;
-  cerr << "usuwanko" << endl;
 }
 
 void WirelessNetwork::PrintInfoAboutSystem()
@@ -474,6 +474,17 @@ void WirelessNetwork::ResetStatistic()
   number_of_packets_correctly_received_ = 0;
   average_delay_of_the_packet_channel_ = 0;
   average_delay_of_the_packet_buffor_ = 0;
+}
+
+double WirelessNetwork::GetChartInitialPhase()
+{
+  double temp=0;
+  for (int i = 0; i < base_stations_.size(); i++)
+  {
+
+    temp += base_stations_[i]->GetErrorRate();
+  }
+  return temp;
 }
 
 

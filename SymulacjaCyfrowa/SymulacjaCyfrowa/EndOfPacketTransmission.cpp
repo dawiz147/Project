@@ -25,6 +25,9 @@ void EndOfPacketTransmission::Execute()
         save.close();
       }
     }
+    ofstream save("InitialPhase.txt", ios_base::app);
+    save << network_->GetTime()<< " " << network_->GetChartInitialPhase() << endl;
+    save.close();
     //cerr << "DODANO DO STACJI ODBIORCZEJ" << endl;
     network_->AddPacketToReceivingStation(received, id_base_station_);
     network_->SaveIdToCheckToSendACK(id_base_station_);

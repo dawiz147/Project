@@ -76,6 +76,7 @@ public:
 	void AddAverageDelayChannel(double time);
 	void PrintStatistic();
 	void ResetStatistic();
+	double GetChartInitialPhase();
 private:
 	vector<BaseStation*> base_stations_;				//A vector that stores pointers to each broadcasting station
 	double time_;										//A variable that specifies the overall system time
