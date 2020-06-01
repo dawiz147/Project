@@ -10,7 +10,6 @@ void CheckACK::Execute()
 {
   if (network_->CheckACK(id_) == true)
   {
-   // cerr << "true" << endl;
     network_->SetCheckACK(true);
     if (network_->GetTypeInfo() != 3)
     {
@@ -35,12 +34,11 @@ void CheckACK::Execute()
   }
   else
   {
-   // cerr << "false" << endl;
     if (network_->GetTypeInfo() != 3)
     {
       if (network_->GetTypePrint() != 2)
       {
-        //cerr << "package from base station id: " << id_ << " did not arrive correctly. error occurrence ter" << endl;
+        cerr << "package from base station id: " << id_ << " did not arrive correctly. error occurrence ter" << endl;
 
       }
     }

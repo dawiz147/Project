@@ -10,10 +10,6 @@ Package::Package(int id_station,int id_package)
 	id_station_ = id_station;
 }
 
-
-
-
-
 int Package::GetLR()
 {
 	return nr_retransmission_;

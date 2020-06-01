@@ -65,7 +65,6 @@ Package* Channel::GetPackageToRetransmison()
 {
 	package_to_send_ = vector_package_[0];
 	vector_package_.erase(vector_package_.begin());
-	//cerr << "size " << vector_package_.size() << endl;
 	if (vector_package_.size() == 0)
 	{
 		colission_ = false;

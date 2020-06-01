@@ -76,7 +76,6 @@ int& BaseStation::GetSeedNormal()
 void BaseStation::AddError()
 {
 	error_rate_++;
-	//all_package_++;
 }
 
 void BaseStation::AddPackageError()
@@ -100,4 +99,9 @@ void BaseStation::ResetStatistic()
 {
 	error_rate_ = 0;
 	all_package_ = 0;
+}
+
+void BaseStation::PrintInfoTest()
+{
+	cerr << "error rate" << error_rate_ << " All package" << all_package_ << endl;
 }

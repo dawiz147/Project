@@ -7,7 +7,7 @@ using namespace std;
 #include "CheckACK.h"
 #include "EndOfPacketTransmission.h"
 #include "FinishSendACK.h"
-
+#include <math.h>
 int main()
 {
   int type_information;
@@ -51,12 +51,12 @@ int main()
   bool condition = true;
   double time_initial_phase;
   int simulation_counter = 0;
+  Package* temp_package;
  for (int i = 0; i < 10; i++) 
   {
     //----------------------------------inicjalizacja systemu-------------------------------------
     WirelessNetwork* wireless_network = new WirelessNetwork(type_information, type_print, step_mode);
     TimeEventList* time_event = new TimeEventList();
-    //ConditionalEvent* conditional_event = new ConditionalEvent(wireless_network, time_event);
     TimeEvent* generate;
     //----------------------------------Tworzenie wykresów generatorów------------------------------------------
     if (first_time == true) {
@@ -77,6 +77,7 @@ int main()
         int tab1[2] = { 0 };
         int tab2[11] = { 0 };
         int tab_exp[300] = { 0 };
+        int tab4[2] = { 0 };
         for (int i = 0; i < 1000000; i++) // zapis do pliku w celu utworzenia wykresu
         {
           temp_result = round(wireless_network->UniformGenerator(seed, 0, 0));
@@ -120,8 +121,17 @@ int main()
           save << i << " " << tab_exp[i] << endl;
           save.close();
         }
-
-
+        for (int i = 0; i < 1000000; i++) // zapis do pliku w celu utworzenia wykresu
+        {
+          exp = wireless_network->ZeroOneGenerator(0.5, seed);
+          tab4[int(exp)]++;
+        }
+        {
+        ofstream save("ZeroOne.txt", ios_base::app);
+        save << 0 << " " << tab4[0] << endl;
+        save << 1 << " " << tab4[1] << endl;
+        save.close();
+        }
       }
       //----------------------------------losowanie seedów------------------------------------------
       // liczba potrzebnych seedow uwzględniając 10 symulacji:
@@ -214,7 +224,7 @@ int main()
       normal.erase(normal.begin());
       wireless_network->SetSeedExpToBaseStation(exponential[0], i);
       exponential.erase(exponential.begin());
-      time = wireless_network->ExponentialGenerator(0.04, wireless_network->GetSeedExpFromBaseStation(i), i);
+      time = wireless_network->ExponentialGenerator(0.4, wireless_network->GetSeedExpFromBaseStation(i), i);//bylo 0.04
       generate = new PackageGeneration(time, wireless_network, i, time_event);
       time_event->AddNewEvent(generate);
     }
@@ -258,11 +268,8 @@ int main()
       else;
       generate = time_event->GetFirst();
       wireless_network->SetTime(generate->GetTime());
-      //cerr << "Czas systemowy: " << wireless_network->GetTime() << endl;
       generate->Execute();
       delete generate;
-      // conditional_event->SetTime(wireless_network->GetTime());
-
 
       if (type_information != 3) {
         if (type_print == 1)
@@ -279,25 +286,22 @@ int main()
 
       if (wireless_network->GetBaseStationSendPacket() != -1) // sprawdzanie czy jakaś stacja bazowa ma wysłać swój pakiet
       {
-        temp_int = wireless_network->CheckIdFromBaseStation(wireless_network->GetBaseStationSendPacket());
         wireless_network->SendPacket(wireless_network->GetBaseStationSendPacket(), wireless_network->GetTime());
         if (type_information == 2)
         {
           if (type_print == 1)
           {
-            cerr << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << " id package: " << temp_int << endl;
+            cerr << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << endl;
             cerr << "Scheduling the packet transmission end event and checking ACK messages" << endl;
           }
           else
           {
             ofstream save("debug.txt", ios_base::app);
-            save << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() << " id package: " << temp_int << endl;
+            save << "The packet was sent from the base station with id: " << wireless_network->GetBaseStationSendPacket() <<  endl;
             save << "Scheduling the packet transmission end event and checking ACK messages" << endl;
             save.close();
           }
         }
-        wireless_network->DeleteCheckingStation(wireless_network->GetBaseStationSendPacket());
-
         temp_time = wireless_network->UniformGeneratorIntercal(10, 1, wireless_network->GetSeedNormalFromBaseStation(wireless_network->GetBaseStationSendPacket()), wireless_network->GetBaseStationSendPacket());
         generate = new EndOfPacketTransmission(temp_time + wireless_network->GetTime(), wireless_network, wireless_network->GetBaseStationSendPacket());
         time_event->AddNewEvent(generate);
@@ -308,19 +312,22 @@ int main()
 
       if ((wireless_network->CheckBaseStationTer() != -1)) // zdarzenie warunkowe wystąpienia błędu TER
       {
-        // cerr << "check base station to ter:" << wireless_network->CheckBaseStationTer() << endl;
         Package* temp_ = wireless_network->GetPackageToTer(wireless_network->CheckBaseStationTer());
         if (temp_->GetLR() < wireless_network->GetNumberOfMaxRetrasmission())
         {
           temp_->IncrementLR();
-          //cerr << temp_->GetLR() << endl;
+          time = wireless_network->UniformGeneratorIntercal((pow(2, temp_->GetLR())) - 1, 0, wireless_network->GetSeedExpFromBaseStation(temp_->GetIdStation()), temp_->GetIdStation())+wireless_network->GetTime();
+          generate = new CheckingChannel(time, wireless_network, temp_->GetIdStation(), 0, time_event);
+          time_event->AddNewEvent(generate);
           wireless_network->AddToRetransmission(temp_, temp_->GetIdStation());
+
           wireless_network->SaveBaseStationTer(-1);
         }
 
         else
         {
           wireless_network->IncrementErrorRateBaseStation(temp_->GetIdStation());
+          wireless_network->DeleteCheckingStation(temp_->GetIdStation());
           wireless_network->SaveBaseStationTer(-1);
           delete temp_;
 
@@ -329,18 +336,34 @@ int main()
       }
       if (wireless_network->GetColission())
       {
-        // cerr << "KOLIZAJAAAAA" << endl;
-        wireless_network->SendToRetransmission();
+        unsigned size = wireless_network->GetChannel()->GetSize();
+        for (unsigned i = 0; i < size; i++)
+        {
+          temp_package = wireless_network->GetChannel()->GetPackageToRetransmison();
+          if (temp_package->GetLR() < wireless_network->GetNumberOfMaxRetrasmission())
+          {
+            temp_package->IncrementLR();
+            time = wireless_network->UniformGeneratorIntercal((pow(2, temp_package->GetLR())) - 1, 0, wireless_network->GetSeedExpFromBaseStation(temp_package->GetIdStation()), temp_package->GetIdStation()) + wireless_network->GetTime();
+            generate = new CheckingChannel(time, wireless_network, temp_package->GetIdStation(), 0, time_event);
+            time_event->AddNewEvent(generate);
+            wireless_network->AddToRetransmission(temp_package, temp_package->GetIdStation());
+          }
+          else
+          {
+            wireless_network->DeleteCheckingStation(temp_package->GetIdStation());
+            wireless_network->IncrementErrorRateBaseStation(temp_package->GetIdStation());
+            delete temp_package;
+          }
+        }
+
         time_event->DeleteCheckACK();
         time_event->DeleteEndTransmission();
       }
-      //cerr << "id to ack send" << wireless_network->GetIdToCheckToSendACK() << endl;
       if (wireless_network->GetIdToCheckToSendACK() > -1) // sprawdzene czy pakiet został poprawnie przesłany przez kanał
       {
-        //cerr << "weszlo1" << endl;
         if (wireless_network->ZeroOneGenerator(0.8, wireless_network->GetSeedFromChannel())) // pakiet poprawnie dostarczony wyślij wiadomośc ACK
         {
-          // cerr << "weszlo2" << endl;
+
           wireless_network->SendACK(wireless_network->GetIdToCheckToSendACK());// przekazuje id do zdarzenia warunkowego wysłania wiadomości ack
           if (type_information == 2)
           {
@@ -355,25 +378,17 @@ int main()
               save.close();
             }
           }
-          // cerr << "weszlo3" << endl;
+          wireless_network->DeleteCheckingStation(wireless_network->GetIdToCheckToSendACK());
           wireless_network->SaveTimeReceivingStation(wireless_network->GetTime(), wireless_network->GetIdToCheckToSendACK());
-          // cerr << "weszlo4" << endl;
           wireless_network->IncrementPackageErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
-          //cerr << "weszlo5" << endl;
           wireless_network->SetAckOnChannel();
-          // cerr << "weszlo6" << endl;
           generate = new FinishSendACK(wireless_network->GetTime() + 1, wireless_network, wireless_network->GetIdToCheckToSendACK());
-          // cerr << "weszlo7" << endl;
           wireless_network->SaveIdToCheckToSendACK(-1);
-          //cerr << "weszlo8" << endl;
           time_event->AddNewEvent(generate);
-          // cerr << "weszlo9" << endl;
         }
         else// pakiet nie został poprawnie dostarczony brak wysłania wiadomości ACK
         {
-          //cerr << "weszlo122" << endl;
           wireless_network->SaveIdToCheckToSendACK(-1);
-          //  wireless_network->IncrementErrorRateBaseStation(wireless_network->GetIdToCheckToSendACK());
         }
       }
       if (type_information != 3) {

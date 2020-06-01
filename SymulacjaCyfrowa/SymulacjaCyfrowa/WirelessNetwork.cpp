@@ -274,27 +274,20 @@ bool WirelessNetwork::GetColission()
 
 void WirelessNetwork::SendToRetransmission()
 {
-  //cerr << "rozmiar kana³u w send to retransmission" << channel_->GetSize() << endl;
   unsigned size = channel_->GetSize();
   for (unsigned i = 0; i < size; i++)
   {
     temp_package_ = channel_->GetPackageToRetransmison();
-    //cerr << temp_package_->GetId() << "R" << endl;
     if (temp_package_->GetLR() < this->GetNumberOfMaxRetrasmission())
     {
       temp_package_->IncrementLR();
-    //  cerr << "ilosc retransmisji: "<<temp_package_->GetLR() << endl;
       this->AddToRetransmission(temp_package_, temp_package_->GetIdStation());
-     // wireless_network->SaveBaseStationTer(-1);
     }
     else
     {
-      //cerr << "increment errorRate: " << temp_package_->GetIdStation() << endl;
       this->IncrementErrorRateBaseStation(temp_package_->GetIdStation());
       delete temp_package_;
-
     }
-   // this->AddToRetransmission(temp_package_, temp_package_->GetIdStation());
   }
 }
 
@@ -442,14 +435,12 @@ void WirelessNetwork::PrintStatistic()
   double temp=0.0;
   double temp2=0.0;
   double id_maks_error_ = base_stations_[0]->GetErrorRate();
- // cerr << "pakieciki: " << number_of_packets_correctly_received_ << endl;
   cerr << "Srednia pakietowa stopa bledow (usredniona po K odbiornikach): " << endl;
   for (int i = 0; i < base_stations_.size(); i++)
   {
 
     temp += base_stations_[i]->GetErrorRate();
     if (id_maks_error_ < base_stations_[i]->GetErrorRate())id_maks_error_ = base_stations_[i]->GetErrorRate();
-    //temp2 += base_stations_[i]->GetPackageError();
   }
   cerr << (temp/ kNumberOfStations_) << endl;
   cerr << "maksymalna pakietowa stopa bledow" << endl;

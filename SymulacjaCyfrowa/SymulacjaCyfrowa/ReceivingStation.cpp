@@ -7,14 +7,11 @@ ReceivingStation::ReceivingStation()
 }
 void ReceivingStation::AddPacket(Package* packet)
 {
-  //cerr << "WPISANIE PAKIETU DO STACJI ODBIORCZEJ" << packet->GetId();
   packet_received_ = packet;
-
 }
 
 Package* ReceivingStation::GetPackage()
 {
- // cerr << "wczytanie  PAKIETU DO STACJI ODBIORCZEJ" << packet_received_->GetId();
   return packet_received_;
 }
 

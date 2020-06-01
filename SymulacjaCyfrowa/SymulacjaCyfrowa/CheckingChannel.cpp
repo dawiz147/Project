@@ -21,7 +21,6 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 raz, fals
       counter_++;
       if (counter_ >= 4)
       {
-        network_->DeleteCheckingStation(id_base_station_);
         network_->SetBaseStationSendPacket(id_base_station_); // przesy³a id do zdarzeñ warunkowych aby wys³aæ pakiet ze stacji
       }
       else
@@ -47,7 +46,6 @@ void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 raz, fals
       }
       if (counter_ == 3)
       {
-        network_->DeleteCheckingStation(id_base_station_);
         network_->SetBaseStationSendPacket(id_base_station_); // przesy³a id do zdarzeñ warunkowych aby wys³aæ pakiet ze stacji
       }
       else
