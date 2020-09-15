@@ -9,7 +9,7 @@ class BaseStation
 {
 public:
 	BaseStation();					//BaseStation class constructor
-	~BaseStation() = default;		//BaseStation class destroyer
+	~BaseStation();		//BaseStation class destroyer
 	void AddPackage(Package* package);
 	Package* SendPackage(double time);
 	void Retransmition(Package* package);

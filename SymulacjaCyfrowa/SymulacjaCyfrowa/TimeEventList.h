@@ -10,7 +10,6 @@ public:
   TimeEventList();
   ~TimeEventList();
   void AddNewEvent(TimeEvent* event);
-  //TimeEvent* GetFirstEvent();
   void PrintList();
   void DeleteTimeEvent(double time);
   void DeleteEndTransmission();

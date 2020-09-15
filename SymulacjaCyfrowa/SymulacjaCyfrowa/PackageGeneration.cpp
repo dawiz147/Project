@@ -38,18 +38,13 @@ void PackageGeneration::Execute()
 	network_->AddPacketToBaseStation(package,id_base_station_);
   TimeEvent* time_event = new PackageGeneration(time_temp, network_, id_base_station_, list_);
   list_->AddNewEvent(time_event);
-  if (network_->CheckingStation(id_base_station_)) //sprawdzanie czy dana stacja nas³uchuje ju¿ kana³u w celu przes³ania pakietu
-  {
-    //nic nie rób stacja sprawdza ju¿ kana³
-
-  }
-  else
+  if (!network_->CheckingStation(id_base_station_)) //sprawdzanie czy dana stacja nas³uchuje ju¿ kana³u w celu przes³ania pakietu
   {
     network_->AddBaseStationChecking(id_base_station_);
-    TimeEvent* event = new CheckingChannel(time_, network_, id_base_station_, 0,list_);
+    TimeEvent* event = new CheckingChannel(time_, network_, id_base_station_, 0, list_);
     list_->AddNewEvent(event);
-
   }
+
 }
 void PackageGeneration::Print()
 {

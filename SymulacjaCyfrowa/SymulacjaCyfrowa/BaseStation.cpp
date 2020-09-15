@@ -8,6 +8,11 @@ BaseStation::BaseStation()
 	error_rate_ = 0;
 }
 
+BaseStation::~BaseStation()
+{
+	while (!package_.empty()) package_.pop();
+}
+
 void BaseStation::AddPackage(Package* package)
 {
 	package_.push(package);
