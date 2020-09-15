@@ -14,14 +14,14 @@ Sporządź wykres zależności przepływności systemu oraz średniej i maksymal
 # Metoda symulacji ABC
 
 2. Parametry
-CGPk - zmienna losowa o rozkładzie wykładniczym o intensywności L
-CTPk – zmienna losowa o rozkładzie jednostajnym w przedziale {1, 2, …, 10} ms
-R – zmienna losowa o rozkładzie jednostajnym w przedziale <0, (2r -1)>
-T – zmienna losowa o rozkładzie jednostajnym w przedziale <0, (2t -1)>
-TER - zmienna losowa o rozkładzie zero-jedynkowym z prawdopodobieństwem sukcesu P
-CTIZ = 1 ms
-CSC = 1 ms
-P = 0.8
+CGPk - zmienna losowa o rozkładzie wykładniczym o intensywności L<p></p>
+CTPk – zmienna losowa o rozkładzie jednostajnym w przedziale {1, 2, …, 10} ms<p></p>
+R – zmienna losowa o rozkładzie jednostajnym w przedziale <0, (2r -1)><p></p>
+T – zmienna losowa o rozkładzie jednostajnym w przedziale <0, (2t -1)><p></p>
+TER - zmienna losowa o rozkładzie zero-jedynkowym z prawdopodobieństwem sukcesu P<p></p>
+CTIZ = 1 ms<p></p>
+CSC = 1 ms<p></p>
+P = 0.8<p></p>
 
 Protokół CSMA (ang. Carrier Sense Multiple Access) z wymuszaniem transmisji z prawdopodobieństwem 1 (ang. 1-persistent) – po wygenerowaniu nowego pakietu, stacja nadawcza sprawdza zajętość kanału transmisyjnego (nasłuchiwanie kanału odbywa się co 0.5 ms). Jeśli kanał jest wolny przez okres dłuższy niż czas DIFS, to stacja podejmuje próbę przesłania swojego pakietu. W przypadku retransmisji, stacja nadawcza sprawdza stan kanału po losowym czasie CRP równym R*CTPk, gdzie R jest losową liczbą z przedziału od <0, (2r -1)>, a r jest numerem aktualnej retransmisji (przy każdej retransmisji czas ten jest losowany ponownie). Wówczas uruchamiana jest taka sama procedura jak w przypadku transmisji pierwotnej (jeśli od tego momentu kanał pozostaje wolny przez czas DIFS, to po czasie DIFS pakiet jest retransmitowany).  DIFS = 2 ms
 
