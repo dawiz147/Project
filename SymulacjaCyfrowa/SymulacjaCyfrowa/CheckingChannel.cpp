@@ -1,5 +1,5 @@
 #include "CheckingChannel.h"
-void CheckingChannel::Execute()//True- zak³adamy ¿e kana³ sprawdzamy 1 raz, false sprawdzenie po czasie DIFS
+void CheckingChannel::Execute()
 {
   if (network_->GetTypeInfo()==2)
   {
